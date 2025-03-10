@@ -1,11 +1,15 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
 {
     public class Domain
-    {
+    {   
+        [Required]
         [Column("DOMA_id")]
         public int Id {get;set;}
+
+        [Required]
         [Column("DOMA_name")]
         public required string Name {get;set;}
         
