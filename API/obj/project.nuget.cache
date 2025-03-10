@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ojbj7E+0y2w=",
+  "dgSpecHash": "nrI4RoiD7r8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\first-aspnet\\first-aspnet.csproj",
+  "projectFilePath": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\API\\first-aspnet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gjmat\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\gjmat\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

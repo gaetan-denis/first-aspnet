@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gjmat\\Desktop\\first-aspnet\\first-aspnet\\first-aspnet.csproj": {}
+    "C:\\Users\\gjmat\\Desktop\\first-aspnet\\API\\first-aspnet.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gjmat\\Desktop\\first-aspnet\\first-aspnet\\first-aspnet.csproj": {
+    "C:\\Users\\gjmat\\Desktop\\first-aspnet\\API\\first-aspnet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\first-aspnet\\first-aspnet.csproj",
+        "projectUniqueName": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\API\\first-aspnet.csproj",
         "projectName": "first-aspnet",
-        "projectPath": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\first-aspnet\\first-aspnet.csproj",
+        "projectPath": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\API\\first-aspnet.csproj",
         "packagesPath": "C:\\Users\\gjmat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\first-aspnet\\obj\\",
+        "outputPath": "C:\\Users\\gjmat\\Desktop\\first-aspnet\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
