@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API.Entities{
-    public class Domain{
+namespace API.Entities
+{
+    public class Domain
+    {
         [Column("DOMA_id")]
         public int Id {get;set;}
         [Column("DOMA_name")]

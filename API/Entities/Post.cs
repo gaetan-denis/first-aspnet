@@ -2,8 +2,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
 {
-    public class Post {
-        [Column("Post_id")]
+    public class Post 
+    {
+        [Column("POST_id")]
         public int Id {get;set;}
         [Column("POST_userId")]
         public int UserId {get;set;}

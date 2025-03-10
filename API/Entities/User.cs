@@ -2,8 +2,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 //commentaire de test
 
-namespace API.Entities{
-    public class User{
+namespace API.Entities
+{
+    public class User
+    {
 
         [Column("USER_id")]
         public int Id {get;set;}
