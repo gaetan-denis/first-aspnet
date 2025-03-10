@@ -34,6 +34,6 @@ namespace API.Entities
         public required User User;
 
         // Définit la relation avec les domaines (Un post peut avoir plusieurs domaines).
-        public ICollection<PostDomain>Domains {get;set;} = new List<PostDomain>(); //Liste des domaines associés
+        public ICollection<PostDomain>PostDomains {get;set;} = new List<PostDomain>(); //Liste des domaines associés
     }
 }
