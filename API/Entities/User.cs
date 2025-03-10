@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 //commentaire de test
 
-namespace firstAspnet.Domain.Entities{
+namespace API.Entities{
     public class User{
 
         [Column("USER_id")]
@@ -17,6 +17,9 @@ namespace firstAspnet.Domain.Entities{
         public DateTime CreatedAt {get;set;}
         [Column("USER_UpdatedAt")]
         public DateTime UpdatedAt {get;set;}
+
+        // Définit la relations avec les posts (un utilisateur peut avoir plusieurs posts)
+        public ICollection<Post> Posts { get; set; } = new List<Post>(); // Liste des posts associés
     }
 }
 
