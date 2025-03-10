@@ -11,6 +11,7 @@ namespace API.Entities
 {
     public class User
     {
+        [Key]
         [Column("USER_Id")]
         public int Id {get;set;}
         

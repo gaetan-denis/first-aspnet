@@ -5,6 +5,7 @@ namespace API.Entities
 {
     public class Domain
     {   
+        [Key]
         [Required]
         [Column("DOMA_id")]
         public int Id {get;set;}

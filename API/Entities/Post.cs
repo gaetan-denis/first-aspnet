@@ -5,6 +5,7 @@ namespace API.Entities
 {
     public class Post 
     {
+        [Key]
         [Required]
         [Column("POST_id")]
         public int Id {get;set;}
