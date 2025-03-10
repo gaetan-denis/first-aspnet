@@ -1,22 +1,39 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations
 
-//commentaire de test
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+
+
+
 
 namespace API.Entities
 {
     public class User
     {
-
-        [Column("USER_id")]
+        [Column("USER_Id")]
         public int Id {get;set;}
-        [Column("USER_username")]
+        
+        [MaxLength(50)]
+        [Required]
+        [Column("USER_Username")]
         public required string Username {get;set;}
-        [Column("USER_password")]
+
+        [EmailAddress]
+        [Column("USER_email")]
+        public required string Email {get;set;}
+        
+        [Required]
+        [Column("USER_Password")]
         public required string Password {get;set;}
-        [Column("USER_isAdmin")]
+
+        [Column("USER_IsAdmin")]
         public bool IsAdmin {get;set;}
-        [Column("USER_createdAt")]
+
+        [Required]
+        [Column("USER_CreatedAt")]
         public DateTime CreatedAt {get;set;}
+        
         [Column("USER_UpdatedAt")]
         public DateTime UpdatedAt {get;set;}
 
