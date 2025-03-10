@@ -16,5 +16,10 @@ namespace API.Entities
         [Column("POST_updated1t")]
         public DateTime UpdateAt {get;set;}
         
+        //Propriété de navigation propre à Entity Framework
+        public required User User;
+
+        // Définit la relation avec les domaines (Un post peut avoir plusieurs domaines).
+        public ICollection<PostDomain>Domains {get;set;} = new List<PostDomain>(); //Liste des domaines associés
     }
 }
