@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace firstAspnet.Domain.Entities
+namespace API.Entities
 {
     public class Post {
         [Column("Post_id")]
