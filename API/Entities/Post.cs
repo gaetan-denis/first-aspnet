@@ -27,11 +27,11 @@ namespace API.Entities
         [Column("POST_createddAt")]
         public DateTime CreatedAt {get;set;}
         
-        [Column("POST_updated1t")]
+        [Column("POST_updatedAt")]
         public DateTime UpdateAt {get;set;}
         
         //Propriété de navigation propre à Entity Framework
-        public required User User;
+        public required User User {get;set;}
 
         // Définit la relation avec les domaines (Un post peut avoir plusieurs domaines).
         public ICollection<PostDomain>PostDomains {get;set;} = new List<PostDomain>(); //Liste des domaines associés
