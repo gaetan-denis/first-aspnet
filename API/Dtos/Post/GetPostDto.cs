@@ -7,6 +7,7 @@ namespace API.Dtos
 {
     public class GetPostDto
     {
+        
         public  required string Title {get;set;}
         
         public required string Content {get;set;}
@@ -14,5 +15,6 @@ namespace API.Dtos
         public DateTime CreatedAt {get;set;}
     
         public DateTime UpdateAt {get;set;}
+        public int UserId {get;set;}
     }
 }
