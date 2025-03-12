@@ -9,6 +9,6 @@ namespace API.Services
     {   
         
         string HashPassword(string password, out string salt); 
-        string  VerifyPassword (string password, string salt, string storedHash);
+        bool  VerifyPassword (string password, string salt, string storedHash);
     }
 }
