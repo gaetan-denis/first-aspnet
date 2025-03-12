@@ -1,7 +1,13 @@
 
-using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//lower case for all controllers.
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+builder.Services.AddControllers();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -20,5 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//Map
+app.MapControllers();
 
 app.Run();

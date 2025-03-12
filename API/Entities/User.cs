@@ -20,7 +20,7 @@ namespace API.Entities
         [Column("USER_Username")]
         public required string Username {get;set;}
 
-        []
+        [Required]
         [EmailAddress]
         [Column("USER_email")]
         public required string Email {get;set;}

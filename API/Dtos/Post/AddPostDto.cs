@@ -11,8 +11,10 @@ namespace API.Dtos
         
         public required string Content {get;set;}
         
-        public DateTime CreatedAt {get;set;}
+        public DateTime CreatedAt {get;set;} // Utile ou on le définit dans la logique métier?
     
         public DateTime UpdateAt {get;set;}
+
+        public required int UserId {get;set;}
     }
 }
