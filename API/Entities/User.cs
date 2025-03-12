@@ -5,8 +5,6 @@ namespace API.Entities
 {
     public class User
     {
-        // dépendance ES email, mail etc, 
-
         [Column("USER_Id")]
         public int Id { get; set; }
         [Column("USER_Username")]
