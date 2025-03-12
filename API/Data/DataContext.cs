@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using API.Entities;
-
 namespace API.Data;
 
 public class DataContext : DbContext
@@ -13,7 +10,7 @@ public class DataContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Post> Posts => Set<Post>();
     public DbSet<Domain> Domains => Set<Domain>();
-    public DbSet<PostDomain> PostDomains=> Set<PostDomain>();
+    public DbSet<PostDomain> PostDomains => Set<PostDomain>();
 
     //Override = redéfini la méthode d'une classe parente?
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,12 +19,12 @@ public class DataContext : DbContext
         modelBuilder.Entity<User>()
             //Possède une clé égale à Id
             .HasKey(u => u.Id);
-        
+
         //Défini la clé primaire de Post
         modelBuilder.Entity<Post>()
             //Possède une clé égale à Id
             .HasKey(p => p.Id);
-        
+
         //Défini la clé primaire de Domain     Redondant?
         modelBuilder.Entity<Domain>()
             //Possède une clé égale à Id
@@ -44,7 +41,7 @@ public class DataContext : DbContext
             .WithMany(u => u.Posts);
 
         modelBuilder.Entity<PostDomain>()
-            // On indique que la combinaison de PostId et de DomainId forme la clé primaire
+             // On indique que la combinaison de PostId et de DomainId forme la clé primaire
              .HasKey(postdom => new { postdom.PostId, postdom.DomainId });
 
         //Relation entre PostDomain et Post
@@ -64,9 +61,5 @@ public class DataContext : DbContext
             .WithMany(p => p.PostDomains)
             // Clé étrangère dans PostDomain
             .HasForeignKey(postdomain => postdomain.DomainId);
-
-
-
-
     }
 }

@@ -16,10 +16,13 @@ namespace API.Entities
         public int UserId {get;set;}
 
         [Required]
+    
+        [StringLength(100, MinimumLength = 3)] 
         [Column("POST_title")]
         public  required string Title {get;set;}
         
         [Required]
+        [StringLength(5000, MinimumLength = 10)]
         [Column("POST_content")]
         public required string Content {get;set;}
         

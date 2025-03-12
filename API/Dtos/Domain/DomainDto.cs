@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Dtos.Post
+namespace API.Dtos.Domain
 {
-    public class UpdatePostDto
+    public class DomainDto
     {
-         [StringLength(5000, MinimumLength = 10)]
-        public required string Content { get; set; }
+
+        [Required]
+        public required string Name {get;set;}
     }
 }
