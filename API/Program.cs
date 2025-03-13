@@ -20,6 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Ajout du service PasswordManager
 builder.Services.AddSingleton<IPasswordManager, PasswordManager>();
+
+
 // Ajout du service de UserController chaque fois qu'une requête http sera effectuée
 
 

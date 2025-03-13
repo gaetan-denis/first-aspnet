@@ -11,9 +11,9 @@ namespace API.Services
         
         Task<ServiceResponse<IEnumerable<UserDto>>>GetAllAsync();
         //Permet d'ajouter un nouvel user dans le système.
-        Task <ServiceResponse<UserDto>>AddAsync(UserDto user);
-        //Permet de modifier un user dans le système.
-        Task <ServiceResponse<UserDto>>UpdateAsync(UserDto user);
+        Task <ServiceResponse<UserDto>>AddAsync(AddUserDto newUser);
+        //Permet de modifier un user dans le système.y
+        Task <ServiceResponse<UserDto>>UpdateAsync(int id);
         // Supprime un user dans le système.
         Task <ServiceResponse<UserDto>>DeleteAsync(int id);
     }
