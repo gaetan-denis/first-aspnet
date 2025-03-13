@@ -1,6 +1,6 @@
 namespace API.Services
 {
-    using API.Dtos.Responses;
+    using API.Dtos;
     using API.Dtos.User;
     using API.Entities;
 

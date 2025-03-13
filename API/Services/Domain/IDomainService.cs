@@ -1,9 +1,9 @@
 namespace API.Services
 {
     using API.Dtos.Domain;
-    using API.Dtos.Responses;
-    using API.Entities;
-   public interface IDomainService
+    using API.Dtos;
+    
+       public interface IDomainService
     {
         // Retourne une tâche contenant un objet Domain.
         Task<ServiceResponse<DomainDto>> GetByIdAsync(int id);

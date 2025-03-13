@@ -1,8 +1,7 @@
 namespace API.Services
 {
     using API.Dtos.Post;
-    using API.Dtos.Responses;
-    using API.Entities;
+    
     public interface IPostService
     {
         

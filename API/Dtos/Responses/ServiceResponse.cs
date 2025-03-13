@@ -1,4 +1,4 @@
-namespace API.Dtos.Responses
+namespace API.Dtos
 {
     public class ServiceResponse<T>
     {
