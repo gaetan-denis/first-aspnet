@@ -57,9 +57,9 @@ namespace API.Controllers
 
         [HttpPut ("{id}")]
 
-        public async Task<IActionResult>UpdateAsync(int id)
+        public async Task<IActionResult>UpdateAsync(int id, [FromBody] UpdateUserDto updatedUser)
         {
-            var response =await _userService.UpdateAsync(id);
+            var response =await _userService.UpdateAsync(id, updatedUser);
             if(response.Success)
             {
                 return Ok(response.Data);

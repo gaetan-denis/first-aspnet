@@ -13,7 +13,7 @@ namespace API.Services
         //Permet d'ajouter un nouvel user dans le système.
         Task <ServiceResponse<UserDto>>AddAsync(AddUserDto newUser);
         //Permet de modifier un user dans le système.y
-        Task <ServiceResponse<UserDto>>UpdateAsync(int id);
+        Task <ServiceResponse<UserDto>>UpdateAsync(int id, UpdateUserDto updatedUser);
         // Supprime un user dans le système.
         Task <ServiceResponse<UserDto>>DeleteAsync(int id);
     }

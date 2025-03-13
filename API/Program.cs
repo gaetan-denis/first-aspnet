@@ -2,8 +2,9 @@
 
 
 
+using API.Repositories;
 using API.Services;
-using API.Services.User;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,8 @@ builder.Services.AddSingleton<IPasswordManager, PasswordManager>();
 
 
 
-// builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
