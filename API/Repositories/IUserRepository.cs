@@ -4,7 +4,7 @@ namespace API.Repositories
     public interface IUserRepository
     {
         // Récupération d'un utilisateur par son ID
-        Task<User> GetByIdAsync(int id);
+        Task<User?> GetByIdAsync(int id);
         //Récupérer tous les utilisateurs
         Task<IEnumerable<User>> GetAllAsync();
         //Ajouter un user

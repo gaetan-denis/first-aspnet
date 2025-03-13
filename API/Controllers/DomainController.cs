@@ -1,32 +1,89 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using API.Dtos.Domain;
+using API.Services;
+
 
 namespace API.bin
 {
-    [Route("[controller]")]
-    public class DomainController : Controller
-    {
-        private readonly ILogger<DomainController> _logger;
-
-        public DomainController(ILogger<DomainController> logger)
+    [Route("API/v1/domains")]
+    public class DomainController : ControllerBase
+   {
+   
+        private readonly IDomainService _domainService;
+        public DomainController(IDomainService domainService)
         {
-            _logger = logger;
+            _domainService = domainService;
         }
 
-        public IActionResult Index()
+        [HttpPost]
+
+        public async Task<IActionResult>AddAsync([FromBody] AddDomainDto newDomain)
         {
-            return View();
+            var response = await _domainService.AddAsync(newDomain);
+            if(response.Success)
+            {
+                return Ok(response.Data);
+            }else
+            {
+                return BadRequest(response);
+            }
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+         [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
         {
-            return View("Error!");
+            var response = await _domainService.GetAllAsync();
+            if (response.Success)
+            {
+                return Ok(response.Data);
+            }
+            else
+            {
+
+                return NoContent();
+            }
         }
+         [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var response = await _domainService.GetByIdAsync(id);
+            if (response.Success)
+            {
+                return Ok(response.Data);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateAsync(int id,[FromBody] UpdateDomainDto updatedDomain)
+        {
+            var response = await _domainService.UpdateAsync(id, updatedDomain);
+            if (response.Success)
+            {
+                return Ok(response.Data);
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
+
+         [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var response = await _domainService.DeleteAsync(id);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
+        }
+
     }
 }
