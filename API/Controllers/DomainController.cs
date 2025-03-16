@@ -3,7 +3,7 @@ using API.Dtos.Domain;
 using API.Services;
 
 
-namespace API.bin
+namespace API.Controllers
 {
     [Route("API/v1/domains")]
     public class DomainController : ControllerBase
