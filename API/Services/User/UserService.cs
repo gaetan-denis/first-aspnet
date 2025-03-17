@@ -9,10 +9,12 @@ namespace API.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPasswordManager _passwordManager;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IPasswordManager passwordManager)
         {
             _userRepository = userRepository;
+            _passwordManager= passwordManager;
         }
 
         /// <summary>
@@ -74,11 +76,17 @@ namespace API.Services
         {
             var response = new ServiceResponse<UserDto>();
 
+            // Hachage du mot de passer avec génération du sel
+
+            string salt;
+            var hashedPassword = _passwordManager.HashPassword(newUser.Password, out salt);
+
             var user = new User
             {
                 Username = newUser.Username,
                 Email = newUser.Email,
-                Password = newUser.Password,
+                Password = hashedPassword,
+                Salt = salt,
                 IsAdmin = newUser.IsAdmin
             };
 
