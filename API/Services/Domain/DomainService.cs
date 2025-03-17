@@ -14,7 +14,12 @@ namespace API.Services
             _domainRepository = domainRepository;
         }
 
-        // Récupérer un domain par ID
+        /// <summary>
+        /// Récupère un domaine en fonction de son identifiant.
+        /// </summary>
+        /// <param name="id">L'identifiant unique du domaine à récupérer.</param>
+        /// <returns>Un objet ServiceResponse contenant un DomainDto avec les informations du domaine si trouvé, ou une réponse d'erreur si le domaine n'existe pas.</returns>
+        
         public async Task<ServiceResponse<DomainDto>> GetByIdAsync(int id)
         {
             var response = new ServiceResponse<DomainDto>();
@@ -32,7 +37,11 @@ namespace API.Services
              return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-        // Récupérer tous les domains
+        /// <summary>
+        /// Récupère tous les domaines.
+        /// </summary>
+        /// <returns>Un objet ServiceResponse contenant une liste de DomainDto avec les informations de tous les domaines.</returns>
+        
         public async Task<ServiceResponse<IEnumerable<DomainDto>>> GetAllAsync()
         {
             var response = new ServiceResponse<IEnumerable<DomainDto>>();
@@ -47,7 +56,12 @@ namespace API.Services
              return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-        // Ajouter un domain
+        /// <summary>
+        /// Ajoute un nouveau domaine.
+        /// </summary>
+        /// <param name="newDomain">Les informations nécessaires pour ajouter un domaine.</param>
+        /// <returns>Un objet ServiceResponse contenant un DomainDto avec les informations du domaine ajouté.</returns>
+        
         public async Task<ServiceResponse<DomainDto>> AddAsync(AddDomainDto newDomain)
         {
             var response = new ServiceResponse<DomainDto>();
@@ -67,7 +81,13 @@ namespace API.Services
              return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-        // Mettre à jour un domain
+        /// <summary>
+        /// Met à jour un domaine existant.
+        /// </summary>
+        /// <param name="id">L'identifiant unique du domaine à mettre à jour.</param>
+        /// <param name="updatedDomain">Les nouvelles informations du domaine à mettre à jour.</param>
+        /// <returns>Un objet ServiceResponse contenant un DomainDto avec les informations du domaine mis à jour.</returns>
+        
         public async Task<ServiceResponse<DomainDto>> UpdateAsync(int id, UpdateDomainDto updatedDomain)
         {
             var response = new ServiceResponse<DomainDto>();
@@ -90,7 +110,12 @@ namespace API.Services
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-        // Supprimer un domain
+        /// <summary>
+        /// Supprime un domaine.
+        /// </summary>
+        /// <param name="id">L'identifiant unique du domaine à supprimer.</param>
+        /// <returns>Un objet ServiceResponse contenant un DomainDto avec les informations du domaine supprimé.</returns>
+        
         public async Task<ServiceResponse<DomainDto>> DeleteAsync(int id)
         {
             var response = new ServiceResponse<DomainDto>();
