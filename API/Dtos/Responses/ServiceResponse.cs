@@ -7,6 +7,8 @@ namespace API.Dtos
         public T? Data {get;set;}
         public bool Success {get;set;} = true;
 
+        public string? Message {get;set;}
+
         public EErrorType ErrorType {get;set;} = EErrorType.SUCCESS;
     }
 }

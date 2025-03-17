@@ -25,10 +25,18 @@ builder.Services.AddSingleton<IPasswordManager, PasswordManager>();
 
 // Ajout du service de UserController chaque fois qu'une requête http sera effectuée
 
-
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+// Ajout du service de PostController chaque fois qu'une requête http sera effectuée
+
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostService,PostService>();
+
+// Ajout du service de DomainController chaque fois qu'une requête http sera effectuée
+
+builder.Services.AddScoped<IDomainRepository, DomainRepository>();
+builder.Services.AddScoped<IDomainService,DomainService>();
 
 var app = builder.Build();
 
