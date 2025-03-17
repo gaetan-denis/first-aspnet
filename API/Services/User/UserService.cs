@@ -1,5 +1,6 @@
 
 using API.Dtos.User;
+using API.Enums;
 using API.Repositories;
 
 namespace API.Services
@@ -22,7 +23,7 @@ namespace API.Services
             if (user == null)
             {
                 response.Success=false;
-                response.Message="User not found";
+                response.ErrorType= EErrorType.NOTFOUND;
                 return response;
             }
 
@@ -86,7 +87,7 @@ namespace API.Services
             if (existingUser == null)
             {
                 response.Success = false;
-                response.Message = "User not found";
+                response.ErrorType = EErrorType.NOTFOUND;
                 return response;
             }
 
@@ -114,7 +115,7 @@ namespace API.Services
             if (user == null)
             {
                 response.Success = false;
-                response.Message= "User not found";
+                response.ErrorType= EErrorType.NOTFOUND ;
                 return response;
             }
 
@@ -125,7 +126,7 @@ namespace API.Services
                 Email = user.Email,
                 IsAdmin= user.IsAdmin
             };
-            response.Message= "User deletedSuccesfully";
+            response.ErrorType= EErrorType.SUCCESS;
             return response;
         }
 
