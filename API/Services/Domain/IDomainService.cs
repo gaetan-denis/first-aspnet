@@ -1,7 +1,6 @@
 namespace API.Services
 {
     using API.Dtos.Domain;
-    using API.Dtos;
     
        public interface IDomainService
     {
