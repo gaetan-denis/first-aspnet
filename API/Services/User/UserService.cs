@@ -15,7 +15,11 @@ namespace API.Services
             _userRepository = userRepository;
         }
 
-        //Récupérer un utilisateur par ID
+        /// <summary>
+        /// Récupère un utilisateur en fonction de son identifiant.
+        /// </summary>
+        /// <param name="id">L'identifiant unique de l'utilisateur à récupérer.</param>
+        /// <returns>Un objet ServiceResponse contenant un UserDto avec les informations de l'utilisateur si trouvé, ou une réponse d'erreur si l'utilisateur n'existe pas.</returns>
 
         public async Task<ServiceResponse<UserDto>> GetByIdAsync(int id)
         {
@@ -35,7 +39,10 @@ namespace API.Services
              return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-        // récupérer tous les utilisateurs
+        /// <summary>
+        /// Récupère tous les utilisateurs.
+        /// </summary>
+        /// <returns>Un objet ServiceResponse contenant une liste de UserDto avec les informations de tous les utilisateurs.</returns>
 
         public async Task<ServiceResponse<IEnumerable<UserDto>>> GetAllAsync()
         {
@@ -57,7 +64,11 @@ namespace API.Services
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-        //Ajouter un utilisateur
+        /// <summary>
+        /// Ajoute un nouvel utilisateur.
+        /// </summary>
+        /// <param name="newUser">Les informations nécessaires pour ajouter un utilisateur.</param>
+        /// <returns>Un objet ServiceResponse contenant un UserDto avec les informations de l'utilisateur ajouté.</returns>
 
         public async Task<ServiceResponse<UserDto>> AddAsync(AddUserDto newUser)
         {
@@ -82,6 +93,13 @@ namespace API.Services
 
              return HttpManager.CreateSuccessResponse(response.Data);
         }
+
+         /// <summary>
+        /// Met à jour un utilisateur existant.
+        /// </summary>
+        /// <param name="id">L'identifiant unique de l'utilisateur à mettre à jour.</param>
+        /// <param name="updatedUser">Les nouvelles informations de l'utilisateur à mettre à jour.</param>
+        /// <returns>Un objet ServiceResponse contenant un UserDto avec les informations de l'utilisateur mis à jour.</returns>
 
         public async Task<ServiceResponse<UserDto>> UpdateAsync(int id, UpdateUserDto updatedUser)
         {
@@ -115,6 +133,12 @@ namespace API.Services
              return HttpManager.CreateSuccessResponse(response.Data);
         }
 
+        /// <summary>
+        /// Supprime un utilisateur.
+        /// </summary>
+        /// <param name="id">L'identifiant unique de l'utilisateur à supprimer.</param>
+        /// <returns>Un objet ServiceResponse contenant un UserDto avec les informations de l'utilisateur supprimé.</returns>
+        
         public async Task<ServiceResponse<UserDto>> DeleteAsync(int id)
         {
             var response = new ServiceResponse<UserDto>();
