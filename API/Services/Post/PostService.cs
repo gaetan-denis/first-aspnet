@@ -136,6 +136,7 @@ namespace API.Services
             existingPost.Content = updatedPost.Content;
             existingPost.User = user; // Met à jour l'utilisateur
             existingPost.UserId = updatedPost.UserId;
+            existingPost.UpdateAt = DateTime.UtcNow;
 
             var updated = await _postRepository.UpdateAsync(existingPost);
 
