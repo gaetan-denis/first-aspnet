@@ -1,8 +1,10 @@
 
 using API.Controllers;
+using API.Dtos.Responses;
 using API.Dtos.User;
 using API.Enums;
 using API.Repositories;
+using Azure;
 
 namespace API.Services
 {
@@ -14,7 +16,7 @@ namespace API.Services
         public UserService(IUserRepository userRepository, IPasswordManager passwordManager)
         {
             _userRepository = userRepository;
-            _passwordManager= passwordManager;
+            _passwordManager = passwordManager;
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace API.Services
                 Email = user.Email,
                 IsAdmin = user.IsAdmin
             };
-             return HttpManager.CreateSuccessResponse(response.Data);
+            return HttpManager.CreateSuccessResponse(response.Data);
         }
 
         /// <summary>
@@ -46,22 +48,37 @@ namespace API.Services
         /// </summary>
         /// <returns>Un objet ServiceResponse contenant une liste de UserDto avec les informations de tous les utilisateurs.</returns>
 
-        public async Task<ServiceResponse<IEnumerable<UserDto>>> GetAllAsync()
+        public async Task<ServiceResponse<Pagination<UserDto>>> GetAllAsync(int page, int window)
         {
-            var response = new ServiceResponse<IEnumerable<UserDto>>();
+            var response = new ServiceResponse<Pagination<UserDto>>();
 
             var users = await _userRepository.GetAllAsync();
 
-            if (users == null)
+            if (users == null || !users.Any())
             {
-                return HttpManager.CreateErrorResponse<IEnumerable<UserDto>>(EErrorType.NOTFOUND, "utilisateurs non trouvés");
+                return HttpManager.CreateErrorResponse<Pagination<UserDto>>(EErrorType.NOTFOUND, "Utilisateurs non trouvés");
             }
-            response.Data = users.Select(u => new UserDto
+
+            // Pagination
+            int totalUsers = users.Count();
+            var paginatedUsers = users
+                .Skip((page - 1) * window)
+                .Take(window)
+                .ToList();
+
+            var userDtos = paginatedUsers.Select(u => new UserDto
             {
                 Username = u.Username,
                 Email = u.Email,
                 IsAdmin = u.IsAdmin
             }).ToList();
+
+            response.Data = new Pagination<UserDto>
+            {
+                Data = userDtos,
+                Page = page,
+                Total = totalUsers
+            };
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -101,10 +118,10 @@ namespace API.Services
                 IsAdmin = addedUser.IsAdmin
             };
 
-             return HttpManager.CreateSuccessResponse(response.Data);
+            return HttpManager.CreateSuccessResponse(response.Data);
         }
 
-         /// <summary>
+        /// <summary>
         /// Met à jour un utilisateur existant.
         /// </summary>
         /// <param name="id">L'identifiant unique de l'utilisateur à mettre à jour.</param>
@@ -115,29 +132,32 @@ namespace API.Services
         {
             var response = new ServiceResponse<UserDto>();
 
-            
+
             var existingUser = await _userRepository.GetByIdAsync(id);
             if (existingUser == null)
             {
-                
+
                 return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
             }
 
+
             existingUser.Username = updatedUser.Username;
             existingUser.Email = updatedUser.Email;
-            existingUser.UpdatedAt = DateTime.UtcNow;
-            
+
+
+
             var updated = await _userRepository.UpdateAsync(existingUser);
 
-            
+
             response.Data = new UserDto
             {
                 Username = updated.Username,
                 Email = updated.Email,
-                IsAdmin = updated.IsAdmin  
+                IsAdmin = updated.IsAdmin
             };
-  
-             return HttpManager.CreateSuccessResponse(response.Data);
+
+
+            return HttpManager.CreateSuccessResponse(response.Data);
         }
 
         /// <summary>
@@ -145,7 +165,7 @@ namespace API.Services
         /// </summary>
         /// <param name="id">L'identifiant unique de l'utilisateur à supprimer.</param>
         /// <returns>Un objet ServiceResponse contenant un UserDto avec les informations de l'utilisateur supprimé.</returns>
-        
+
         public async Task<ServiceResponse<UserDto>> DeleteAsync(int id)
         {
             var response = new ServiceResponse<UserDto>();
@@ -153,7 +173,7 @@ namespace API.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-               return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
+                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
             }
 
             await _userRepository.DeleteAsync(id);
