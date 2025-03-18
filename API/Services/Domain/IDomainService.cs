@@ -1,13 +1,14 @@
 namespace API.Services
 {
     using API.Dtos.Domain;
-    
-       public interface IDomainService
+    using API.Dtos.Responses;
+
+    public interface IDomainService
     {
         // Retourne une tâche contenant un objet Domain.
         Task<ServiceResponse<DomainDto>> GetByIdAsync(int id);
         // Récupère un domaine spécifique en fonction de son id.
-        Task<ServiceResponse<IEnumerable<DomainDto>>> GetAllAsync();
+        Task<ServiceResponse<Pagination<DomainDto>>> GetAllAsync(int page, int window);
         //Permet d'ajouter un nouvel domaine dans le système.
         Task<ServiceResponse<DomainDto>> AddAsync(AddDomainDto newDomain);
         //Permet de modifier un domain dans le système.

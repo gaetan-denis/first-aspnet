@@ -37,9 +37,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] int page, [FromQuery] int? window)
         {
-            var response = await _domainService.GetAllAsync();
+            var response = await _domainService.GetAllAsync(page, window ?? 20);
             if (response.Success)
             {
                 return Ok(response.Data);
