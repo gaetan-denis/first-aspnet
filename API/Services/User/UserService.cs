@@ -59,7 +59,7 @@ namespace API.Services
                 return HttpManager.CreateErrorResponse<Pagination<UserDto>>(EErrorType.NOTFOUND, "Utilisateurs non trouvés");
             }
 
-            // Pagination
+            
             int totalUsers = users.Count();
             var paginatedUsers = users
                 .Skip((page - 1) * window)

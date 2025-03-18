@@ -1,5 +1,6 @@
 using API.Controllers;
 using API.Dtos.Post;
+using API.Dtos.Responses;
 using API.Enums;
 using API.Repositories;
 
@@ -49,19 +50,43 @@ namespace API.Services
         /// </summary>
         /// <returns>Un objet ServiceResponse contenant une liste de PostDto.</returns>
 
-        public async Task<ServiceResponse<IEnumerable<PostDto>>> GetAllAsync()
+        public async Task<ServiceResponse<Pagination<PostDto>>> GetAllAsync(int page, int window)
         {
-            var response = new ServiceResponse<IEnumerable<PostDto>>();
+            var response = new ServiceResponse<Pagination<PostDto>>();
 
+            
             var posts = await _postRepository.GetAllAsync();
-            response.Data = posts.Select(p => new PostDto
+
+            
+            if (posts == null || !posts.Any())
+            {
+                return HttpManager.CreateErrorResponse<Pagination<PostDto>>(EErrorType.NOTFOUND, "Aucun post trouvé");
+            }
+
+            
+            int totalPosts = posts.Count();  
+            var paginatedPosts = posts
+                .Skip((page - 1) * window)      
+                .Take(window)                  
+                .ToList();
+
+            
+            var postDtos = paginatedPosts.Select(p => new PostDto
             {
                 Title = p.Title,
                 Content = p.Content,
                 UserId = p.UserId
-
             }).ToList();
 
+            
+            response.Data = new Pagination<PostDto>
+            {
+                Data = postDtos,
+                Page = page,
+                Total = totalPosts
+            };
+
+            
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
@@ -155,7 +180,7 @@ namespace API.Services
         /// </summary>
         /// <param name="id">L'identifiant du post à supprimer.</param>
         /// <returns>Un objet ServiceResponse contenant les informations du post supprimé.</returns>
-        
+
         public async Task<ServiceResponse<PostDto>> DeleteAsync(int id)
         {
             var response = new ServiceResponse<PostDto>();
