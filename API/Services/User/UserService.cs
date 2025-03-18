@@ -87,7 +87,9 @@ namespace API.Services
                 Email = newUser.Email,
                 Password = hashedPassword,
                 Salt = salt,
-                IsAdmin = newUser.IsAdmin
+                IsAdmin = newUser.IsAdmin,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             var addedUser = await _userRepository.AddAsync(user);
@@ -121,11 +123,9 @@ namespace API.Services
                 return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
             }
 
-            
             existingUser.Username = updatedUser.Username;
             existingUser.Email = updatedUser.Email;
-            
-
+            existingUser.UpdatedAt = DateTime.UtcNow;
             
             var updated = await _userRepository.UpdateAsync(existingUser);
 
@@ -136,8 +136,7 @@ namespace API.Services
                 Email = updated.Email,
                 IsAdmin = updated.IsAdmin  
             };
-
-            
+  
              return HttpManager.CreateSuccessResponse(response.Data);
         }
 

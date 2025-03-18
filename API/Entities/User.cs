@@ -22,6 +22,8 @@ namespace API.Entities
         [Column("USER_CreatedAt")]
         public DateTime CreatedAt { get; set; }
         [Column("USER_UpdatedAt")]
+
+        // Rajout de nullable pour empêcher l'inserstion d'une valeur en db à la création.
         public DateTime UpdatedAt { get; set; }
         [Column("USER_Salt")]
         [Required]

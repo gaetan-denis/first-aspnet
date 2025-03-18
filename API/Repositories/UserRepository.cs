@@ -19,14 +19,14 @@ namespace API.Repositories
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> AddAsync (User user)
+        public async Task<User> AddAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
         }
 
-        public async Task<User>UpdateAsync (User user)
+        public async Task<User> UpdateAsync(User user)
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();

@@ -13,6 +13,8 @@ namespace API.Dtos.User
         [Required]
         public required string Password { get; set; }
 
-        public bool IsAdmin { get; set; } 
+        // Initialisation de la valeur par défaut à false
+        public bool IsAdmin { get; set; } = false; 
+        
     }
 }
