@@ -1,3 +1,5 @@
+using API.Enums;
+
 namespace API.Validator
 {
     public class PayloadValidator
@@ -59,7 +61,7 @@ namespace API.Validator
 
             return true;
         }
-        
+
         /// <summary>
         /// <Prend une chaîne de caractères (<paramref name="suspiciousEmail"/> et vérifie qu'elle ne contient pas de nom de domaine assimilé à une adresse mail jetable.>
         /// </summary>
@@ -68,8 +70,8 @@ namespace API.Validator
 
         public static bool BlockTemporaryEmails(string suspiciousEmail)
         {
-            suspiciousEmail= suspiciousEmail.Trim();
-            string[] temporatyEmailDomain = new string []
+            suspiciousEmail = suspiciousEmail.Trim();
+            string[] temporatyEmailDomain = new string[]
             {
                 "10minutemail.com",
                 "20minutemail.com",
@@ -124,5 +126,14 @@ namespace API.Validator
             return true;
         }
 
+        public static ServiceResponse<T> BuildError<T>(string message, EErrorType errorType = EErrorType.BAD) 
+        {
+             return new ServiceResponse<T>
+            {
+                Message = message,
+                ErrorType = errorType
+            };
         }
+
     }
+}

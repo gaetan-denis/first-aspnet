@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Dtos.Domain;
+using API.Validator;
+using API.Enums;
 
 namespace API.Controllers
 {
@@ -15,6 +17,19 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] AddDomainDto newDomain)
         {
+            if (
+                !PayloadValidator.ProtectAgainstSQLI(newDomain.Name))                 
+            {
+                var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
+                return BadRequest(errorResponse);
+            }
+            if (
+                !PayloadValidator.ProtectAgainstXSS(newDomain.Name))
+                
+            {
+                var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
+                return BadRequest(errorResponse);
+            }
             var response = await _domainService.AddAsync(newDomain);
             return await HttpManager.HttpResponse(response);
         }
@@ -36,6 +51,19 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateDomainDto updatedDomain)
         {
+            if (
+                !PayloadValidator.ProtectAgainstSQLI(updatedDomain.Name))                 
+            {
+                var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
+                return BadRequest(errorResponse);
+            }
+            if (
+                !PayloadValidator.ProtectAgainstXSS(updatedDomain.Name))
+                
+            {
+                var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
+                return BadRequest(errorResponse);
+            }
             var response = await _domainService.UpdateAsync(id, updatedDomain);
             return await HttpManager.HttpResponse(response);
         }
