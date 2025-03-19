@@ -8,6 +8,19 @@ using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Ajout de la politique CORS
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")  
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -49,7 +62,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+
+//Appliquer la politique CORS
+app.UseCors("AllowReactApp");
+
+app.UseRouting();
+
+
+
 //Map
 app.MapControllers();
 
-app.Run();
+app.Run(); 
