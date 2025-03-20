@@ -1,38 +1,27 @@
-
-import { useEffect, useState } from 'react'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import UsersPage from './pages/UserPage'
+import PostsPage from './pages/PostPage';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
-  const[data, setdata] = useState<any>(null);
-
-
-  useEffect(()=>{
-    fetch("http://localhost:5086/api/v1/users",{
-      method : "get",
-      headers: {
-        'Content-Type' : 'application/json',
-      },
-    })
-    .then((response)=>{
-      if(!response.ok){
-        console.error("Une erreur est survenue lors de la récupération des données");
-      }else{
-        return response.json();
-      }
-    })
-
-    .then((data) =>{
-      setdata(data.data);
-    })
-    
-    
-  },[])
   return (
-    <>
-     <h1></h1>
-     <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
-  )
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/posts">Posts</a></li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/posts" element={<PostsPage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
