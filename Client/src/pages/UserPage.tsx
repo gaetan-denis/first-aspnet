@@ -12,6 +12,8 @@ const UserPage: React.FC = () => {
     });
   }, []);
 
+  
+
   return (
     <div>
       <h2>Liste des utilisateurs</h2>
@@ -27,7 +29,7 @@ const UserPage: React.FC = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr>
+            <tr key={user.email}>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>
