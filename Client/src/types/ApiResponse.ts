@@ -1,10 +1,9 @@
 import "../types/User";
-import { User } from "../types/User";
 
-    export interface ApiResponse
+    export interface ApiResponse<T>
     {
         data : {
-            data : User[]
+            data : T[]
         }
     }
 
