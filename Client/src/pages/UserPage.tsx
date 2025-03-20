@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { ApiResponse } from "../types/ApiResponse";
 import { User } from "../types/User";
-import { fetchUsers } from "../services/api";
+import { fetchAllUsers } from "../services/api";
 
 const UserPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetchUsers().then((response: ApiResponse) => {
+    fetchAllUsers().then((response: ApiResponse) => {
       console.log(response);
       setUsers(response.data.data);
     });
