@@ -20,6 +20,8 @@ const UserPage: React.FC = () => {
             <th>Nom d'utilisateur</th>
             <th>Adresse mail</th>
             <th>Statut</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +30,8 @@ const UserPage: React.FC = () => {
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>
+              <td><button><i className="fa-solid fa-pen"></i></button></td>
+              <td><button><i className="fa-solid fa-trash"></i></button></td>
             </tr>
           ))}
         </tbody>
