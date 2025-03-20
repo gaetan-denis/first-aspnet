@@ -1,5 +1,5 @@
 const DashboardPage: React.FC = () => {
-  return <h1>Panneau d'administration</h1>;
+  return <h2>Accueil</h2>;
 }
 
 export default DashboardPage;
