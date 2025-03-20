@@ -7,24 +7,31 @@ const UserPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetchAllUsers().then((response: ApiResponse) => {
-      console.log(response);
+    fetchAllUsers().then((response: ApiResponse<User>) => {
       setUsers(response.data.data);
     });
   }, []);
 
   return (
-    
     <div>
-      <h1>Liste des utilisateurs</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.email}>
-            <strong>{user.username}</strong> - {user.email}
-            {user.isAdmin && <span> (Admin)</span>}
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Adresse mail</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
