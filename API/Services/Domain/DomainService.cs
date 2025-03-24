@@ -32,6 +32,7 @@ namespace API.Services
 
             response.Data = new DomainDto
             {
+                DomainId = domain.Id,
                 Name = domain.Name,
 
             };
@@ -66,6 +67,7 @@ namespace API.Services
             // Mapper les domaines en DomainDto
             var domainDtos = paginatedDomains.Select(d => new DomainDto
             {
+                DomainId = d.Id,
                 Name = d.Name
             }).ToList();
 
@@ -101,6 +103,7 @@ namespace API.Services
 
             response.Data = new DomainDto
             {
+                DomainId = domain.Id,
                 Name = addedDomain.Name,
             };
 
@@ -130,6 +133,7 @@ namespace API.Services
 
             response.Data = new DomainDto
             {
+                DomainId = updated.Id,
                 Name = updated.Name,
             };
 
@@ -156,6 +160,7 @@ namespace API.Services
 
             response.Data = new DomainDto
             {
+                DomainId= domain.Id,
                 Name = domain.Name,
             };
 
