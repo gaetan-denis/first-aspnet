@@ -12,6 +12,18 @@ export const fetchAllUsers = async (): Promise<ApiResponse<User>> => {
   return data;
 };
 
+export const addAUser = async (newUser: User): Promise<ApiResponse<User>> => {
+  const response = await fetch("http://localhost:5086/api/v1/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newUser),
+  });
+  const data = await response.json();
+  return data;
+};
+
 export const deleteAUser = async (userId: number): Promise<void> => {
   const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`, {
     method: "DELETE",
