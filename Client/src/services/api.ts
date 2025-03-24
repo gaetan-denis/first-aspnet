@@ -7,6 +7,7 @@ import { User } from "../types/User";
 export const fetchAllUsers = async() : Promise<ApiResponse<User>> => {
     const response = await fetch("http://localhost:5086/api/v1/users")
     const data = await response.json();
+    console.log("User data:", data); // 🔍 Vérifie ce que tu reçois
     return data;
 }
 

@@ -29,7 +29,7 @@ const UserPage: React.FC = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.email}>
+            <tr key={user.id}>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>

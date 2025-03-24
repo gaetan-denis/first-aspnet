@@ -36,6 +36,7 @@ namespace API.Services
 
             response.Data = new UserDto
             {
+                UserId = user.Id,
                 Username = user.Username,
                 Email = user.Email,
                 IsAdmin = user.IsAdmin
@@ -68,6 +69,7 @@ namespace API.Services
 
             var userDtos = paginatedUsers.Select(u => new UserDto
             {
+                UserId=u.Id,
                 Username = u.Username,
                 Email = u.Email,
                 IsAdmin = u.IsAdmin
@@ -113,6 +115,7 @@ namespace API.Services
 
             response.Data = new UserDto
             {
+                UserId = user.Id,
                 Username = addedUser.Username,
                 Email = addedUser.Email,
                 IsAdmin = addedUser.IsAdmin
@@ -151,6 +154,7 @@ namespace API.Services
 
             response.Data = new UserDto
             {
+                UserId = updated.Id,
                 Username = updated.Username,
                 Email = updated.Email,
                 IsAdmin = updated.IsAdmin
@@ -179,6 +183,7 @@ namespace API.Services
             await _userRepository.DeleteAsync(id);
             response.Data = new UserDto
             {
+                UserId = user.Id,
                 Username = user.Username,
                 Email = user.Email,
                 IsAdmin = user.IsAdmin
