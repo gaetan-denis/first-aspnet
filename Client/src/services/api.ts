@@ -5,44 +5,47 @@ import { User } from "../types/User";
 
 // Users
 
-export const fetchAllUsers = async() : Promise<ApiResponse<User>> => {
-    const response = await fetch("http://localhost:5086/api/v1/users")
-    const data = await response.json();
-    console.log("User data:", data);
-    return data;
-}
+export const fetchAllUsers = async (): Promise<ApiResponse<User>> => {
+  const response = await fetch("http://localhost:5086/api/v1/users");
+  const data = await response.json();
+  console.log("User data:", data);
+  return data;
+};
 
-export const deleteAUser = async(userId : number) : Promise<void> => {
-    const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`,{
-        method : "DELETE",
-    });
-}
+export const deleteAUser = async (userId: number): Promise<void> => {
+  const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`, {
+    method: "DELETE",
+  });
+};
 
 // Posts
 
-export const fetchAllPosts = async() : Promise<ApiResponse<Post>> => {
-    const response = await fetch('http://localhost:5086/api/v1/posts')
-        const data = await response.json();
-        return data;
-}
+export const fetchAllPosts = async (): Promise<ApiResponse<Post>> => {
+  const response = await fetch("http://localhost:5086/api/v1/posts");
+  const data = await response.json();
+  return data;
+};
 
-export const deleteAPost  = async(postId : number) : Promise<void> => {
-    const response = await fetch(`http://localhost:5086/api/v1/posts/${postId}`,{
-        method : "DELETE",
-    });
-}
+export const deleteAPost = async (postId: number): Promise<void> => {
+  const response = await fetch(`http://localhost:5086/api/v1/posts/${postId}`, {
+    method: "DELETE",
+  });
+};
 
 // Domains
 
-export const fetchAllDomains = async() : Promise<ApiResponse<Domain>> => {
-    const response = await fetch('http://localhost:5086/api/v1/domains')
-        const data = await response.json();
-        console.log(data);
-        return data;
-}
+export const fetchAllDomains = async (): Promise<ApiResponse<Domain>> => {
+  const response = await fetch("http://localhost:5086/api/v1/domains");
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
 
-export const deleteADomain  = async(domainId : number) : Promise<void> => {
-    const response = await fetch(`http://localhost:5086/api/v1/domains/${domainId}`,{
-        method : "DELETE",
-    });
-}
+export const deleteADomain = async (domainId: number): Promise<void> => {
+  const response = await fetch(
+    `http://localhost:5086/api/v1/domains/${domainId}`,
+    {
+      method: "DELETE",
+    }
+  );
+};

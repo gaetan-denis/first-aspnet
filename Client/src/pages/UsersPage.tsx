@@ -22,6 +22,25 @@ const UserPage: React.FC = () => {
 
   return (
     <div>
+      <h2>Ajouter un utilisateur</h2>
+      <thead>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Adresse mail</th>
+            <th>Admin?</th>
+            <th>Ajouter</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td><input type="text" name="username"/></td>
+            <td><input type="email" name="email" /></td>
+            <td><input type="checkbox" name="isAdmin"/></td>
+            <td><button><i className="fa-solid fa-plus"></i></button></td>
+            
+            <td></td>
+          </tr>
+        </tbody>
       <h2>Liste des utilisateurs</h2>
       <table>
         <thead>
