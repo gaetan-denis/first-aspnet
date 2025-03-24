@@ -25,7 +25,7 @@ const DomainsPage: React.FC = () => {
         </thead>
         <tbody>
           {domains.map((domain) => (
-            <tr key={domain.d}>
+            <tr key={domain.domainId}>
               <td>{domain.name}</td>
             
               <td><button><i className="fa-solid fa-pen"></i></button></td>
