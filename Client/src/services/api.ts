@@ -13,7 +13,7 @@ export const fetchAllUsers = async() : Promise<ApiResponse<User>> => {
 }
 
 export const deleteAUser = async(userId : number) : Promise<void> => {
-    const response = await fetch(`http://localhost:5086/v1/users/${userId}`,{
+    const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`,{
         method : "DELETE",
     });
 }
@@ -27,7 +27,7 @@ export const fetchAllPosts = async() : Promise<ApiResponse<Post>> => {
 }
 
 export const deleteAPost  = async(postId : number) : Promise<void> => {
-    const response = await fetch(`http://localhost:5086/v1/posts/${postId}`,{
+    const response = await fetch(`http://localhost:5086/api/v1/posts/${postId}`,{
         method : "DELETE",
     });
 }
@@ -42,7 +42,7 @@ export const fetchAllDomains = async() : Promise<ApiResponse<Domain>> => {
 }
 
 export const deleteADomain  = async(domainId : number) : Promise<void> => {
-    const response = await fetch(`http://localhost:5086/v1/domains/${domainId}`,{
+    const response = await fetch(`http://localhost:5086/api/v1/domains/${domainId}`,{
         method : "DELETE",
     });
 }
