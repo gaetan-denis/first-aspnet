@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiResponse } from "../types/ApiResponse";
 import { Post } from "../types/Post";
-import { fetchAllPosts } from "../services/api";
+import { deleteAPost, fetchAllPosts } from "../services/api";
 
 const PostsPage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -12,6 +12,11 @@ const PostsPage: React.FC = () => {
       setPosts(response.data.data);
     });
   }, []);
+
+  const handleDeletePost = async (postId : number) => {
+      await deleteAPost(postId)
+      setPosts(posts.filter(post => post.postId !== postId));
+  }
   return (
     <div>
       <h2>Listes des publications</h2>
@@ -32,7 +37,7 @@ const PostsPage: React.FC = () => {
               <td>{post.title}</td>
               <td>{post.content}</td>
               <td><button><i className="fa-solid fa-pen"></i></button></td>
-              <td><button><i className="fa-solid fa-trash"></i></button></td>
+              <td><button onClick={() => handleDeletePost(post.postId)}><i className="fa-solid fa-trash"></i></button></td>
             </tr>
           ))}
         </tbody>

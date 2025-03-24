@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiResponse } from "../types/ApiResponse";
 import { User } from "../types/User";
-import { fetchAllUsers } from "../services/api";
+import { deleteAUser, fetchAllUsers } from "../services/api";
 
 const UserPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -12,6 +12,11 @@ const UserPage: React.FC = () => {
       setUsers(response.data.data);
     });
   }, []);
+
+  const handleDeleteUser = async (userId : number) => {
+        await deleteAUser(userId)
+        setUsers(users.filter(user => user.userId !== userId));
+    }
 
   
 
@@ -35,7 +40,7 @@ const UserPage: React.FC = () => {
               <td>{user.email}</td>
               <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>
               <td><button><i className="fa-solid fa-pen"></i></button></td>
-              <td><button><i className="fa-solid fa-trash"></i></button></td>
+              <td><button onClick={() => handleDeleteUser(user.userId)}><i className="fa-solid fa-trash"></i></button></td>
             </tr>
           ))}
         </tbody>
