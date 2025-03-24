@@ -37,6 +37,7 @@ namespace API.Services
 
             response.Data = new PostDto
             {
+                PostId = post.Id,
                 Title = post.Title,
                 Content = post.Content,
                 UserId = post.UserId
@@ -73,6 +74,7 @@ namespace API.Services
             
             var postDtos = paginatedPosts.Select(p => new PostDto
             {
+                PostId = p.Id,
                 Title = p.Title,
                 Content = p.Content,
                 UserId = p.UserId
@@ -123,6 +125,7 @@ namespace API.Services
 
             response.Data = new PostDto
             {
+                PostId = post.Id,
                 Title = addedPost.Title,
                 Content = addedPost.Content,
                 UserId = addedPost.UserId
@@ -167,6 +170,7 @@ namespace API.Services
 
             response.Data = new PostDto
             {
+                PostId = updated.Id,
                 Title = updated.Title,
                 Content = updated.Content,
                 UserId = updated.UserId
@@ -195,6 +199,7 @@ namespace API.Services
 
             response.Data = new PostDto
             {
+                PostId = post.Id,
                 Title = post.Title,
                 Content = post.Content,
                 UserId = post.UserId,
