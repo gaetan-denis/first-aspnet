@@ -27,7 +27,7 @@ const PostsPage: React.FC = () => {
         </thead>
         <tbody>
           {posts.map((post) => (
-            <tr>
+            <tr key={post.postId}>
               <td>{post.userId}</td>
               <td>{post.title}</td>
               <td>{post.content}</td>

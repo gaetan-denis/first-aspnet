@@ -8,6 +8,7 @@ const UserPage: React.FC = () => {
 
   useEffect(() => {
     fetchAllUsers().then((response: ApiResponse<User>) => {
+      console.log('Response from API:', response);
       setUsers(response.data.data);
     });
   }, []);
@@ -29,7 +30,7 @@ const UserPage: React.FC = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
+            <tr key={user.userId}>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>

@@ -1,6 +1,41 @@
+import { useEffect, useState } from "react";
+import { ApiResponse } from "../types/ApiResponse";
+import { Domain } from "../types/Domain";
+import { fetchAllDomains} from "../services/api";
 
 const DomainsPage: React.FC = () => {
-  return <h2>Liste des domaines</h2>;
-}
+  const [domains, setDomains] = useState<Domain[]>([]);
+
+  useEffect(() => {
+    fetchAllDomains().then((response: ApiResponse<Domain>) => {
+      console.log(response);
+      setDomains(response.data.data);
+    });
+  }, []);
+  return (
+    <div>
+      <h2>Listes des domaines</h2>
+      <table>
+        <thead>
+          <tr>
+           <th>Nom</th>
+           <th>Modifier</th>
+           <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {domains.map((domain) => (
+            <tr key={domain.d}>
+              <td>{domain.name}</td>
+            
+              <td><button><i className="fa-solid fa-pen"></i></button></td>
+              <td><button><i className="fa-solid fa-trash"></i></button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default DomainsPage;
