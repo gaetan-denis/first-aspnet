@@ -77,6 +77,25 @@ export const addAdomain = async (newDomain: Domain): Promise<ApiResponse<Domain>
   return data;
 };
 
+export const updateADomain = async (domainId: number, updatedDomain: { name: string }) => {
+  const response = await fetch(`http://localhost:5086/api/v1/domains/${domainId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: updatedDomain.name,
+    }),
+  });
+
+  const text = await response.text();
+  if (text) {
+    const data = JSON.parse(text);
+    return data;
+  }
+};
+
+
 export const deleteADomain = async (domainId: number): Promise<void> => {
   const response = await fetch(
     `http://localhost:5086/api/v1/domains/${domainId}`,
