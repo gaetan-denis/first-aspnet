@@ -31,23 +31,24 @@ const UserPage: React.FC = () => {
   };
 
   const handleAddUser = async () => {
+    
     if (!newUser.username || !newUser.email || !newUser.password) {
       alert("Tous les champs doivent être remplis !");
       return;
     }
-  
-    const response = await addAUser(newUser);
-  
-    if (response && response.data) {
 
-      setUsers([...users, response.data]);
+    const response = await addAUser(newUser);
+
+    if (response && response.data) {
+      //
+      setUsers((prevUsers) => [...prevUsers, ...response.data.data]);
       setNewUser({
         userId: 0,
-        username: '',
-        email: '',
-        password: '',
-        isAdmin: false
-      });  // Réinitialise le formulaire
+        username: "",
+        email: "",
+        password: "",
+        isAdmin: false,
+      });
     } else {
       alert("Erreur lors de l'ajout de l'utilisateur");
     }
@@ -61,59 +62,61 @@ const UserPage: React.FC = () => {
   return (
     <div>
       <h2>Ajouter un utilisateur</h2>
-      <thead>
-        <tr>
-          <th>Nom d'utilisateur</th>
-          <th>Adresse mail</th>
-          <th>Password</th>
-          <th>Admin</th>
-          <th>Ajouter</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input
-              type="text"
-              name="username"
-              value={newUser.username}
-              onChange={handleInputChange}
-            />
-          </td>
-          <td>
-            <input
-              type="email"
-              name="email"
-              value={newUser.email}
-              onChange={handleInputChange}
-            />
-          </td>
-          <td>
-            <input
-              type="password"
-              name="password"
-              value={newUser.password}
-              onChange={handleInputChange}
-            />
-          </td>
-          <td>
-            <input
-              type="checkbox"
-              name="isAdmin"
-              checked={newUser.isAdmin}
-              onChange={handleInputChange}
-            />
-          </td>
-       
-          <td>
-            <button onClick={handleAddUser}>
-              <i className="fa-solid fa-plus"></i>
-            </button>
-          </td>
-
-          <td></td>
-        </tr>
-      </tbody>
+         <form onSubmit={handleAddUser}>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom d'utilisateur</th>
+              <th>Adresse mail</th>
+              <th>Password</th>
+              <th>Admin</th>
+              <th>Ajouter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  name="username"
+                  value={newUser.username}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="email"
+                  name="email"
+                  value={newUser.email}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="password"
+                  name="password"
+                  value={newUser.password}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  name="isAdmin"
+                  checked={newUser.isAdmin}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                {/* On utilise un bouton submit pour soumettre le formulaire */}
+                <button type="submit">
+                  <i className="fa-solid fa-plus"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
       <h2>Liste des utilisateurs</h2>
       <table>
         <thead>
