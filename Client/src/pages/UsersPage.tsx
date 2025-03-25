@@ -39,6 +39,7 @@ const UserPage: React.FC = () => {
     const response = await addAUser(newUser);
   
     if (response && response.data) {
+
       setUsers([...users, response.data]);
       setNewUser({
         userId: 0,

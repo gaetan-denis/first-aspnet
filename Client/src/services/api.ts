@@ -38,6 +38,18 @@ export const fetchAllPosts = async (): Promise<ApiResponse<Post>> => {
   return data;
 };
 
+export const addAPost = async (newPost: Post): Promise<ApiResponse<Post>> => {
+  const response = await fetch("http://localhost:5086/api/v1/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newPost),
+  });
+  const data = await response.json();
+  return data;
+};
+
 export const deleteAPost = async (postId: number): Promise<void> => {
   const response = await fetch(`http://localhost:5086/api/v1/posts/${postId}`, {
     method: "DELETE",
