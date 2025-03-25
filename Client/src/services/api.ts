@@ -24,6 +24,25 @@ export const addAUser = async (newUser: User): Promise<ApiResponse<User>> => {
   return data;
 };
 
+export const updateAUser = async (userId: number, updatedUser: { name: string, email: string }) => {
+  const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: updatedUser.name,
+      email: updatedUser.email,
+    }),
+  });
+
+  const text = await response.text();
+  if (text) {
+    const data = JSON.parse(text);
+    return data;
+  }
+};
+
 export const deleteAUser = async (userId: number): Promise<void> => {
   const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`, {
     method: "DELETE",
@@ -48,6 +67,26 @@ export const addAPost = async (newPost: Post): Promise<ApiResponse<Post>> => {
   });
   const data = await response.json();
   return data;
+};
+
+export const updateAPost = async (postId: number, updatedPost: { title: string, content: string, userId :  number }) => {
+  const response = await fetch(`http://localhost:5086/api/v1/posts/${postId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: updatedPost.title,
+      content: updatedPost.content,
+      userId : updatedPost.userId,
+    }),
+  });
+
+  const text = await response.text();
+  if (text) {
+    const data = JSON.parse(text);
+    return data;
+  }
 };
 
 export const deleteAPost = async (postId: number): Promise<void> => {
