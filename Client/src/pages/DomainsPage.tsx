@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { ApiResponse } from "../types/ApiResponse";
 import { Domain } from "../types/Domain";
-import { deleteADomain, fetchAllDomains, updateADomain } from "../services/api";
+import { deleteADomain, fetchAllDomains, addAdomain } from "../services/api";
 
 const DomainsPage: React.FC = () => {
   const [domains, setDomains] = useState<Domain[]>([]);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editingDomain, setEditingDomain] = useState<Domain | null>(null);
+  const [newDomain, setNewDomain] = useState<Domain>({ name: "" }); // Etat pour le formulaire
 
   useEffect(() => {
     fetchAllDomains().then((response: ApiResponse<Domain>) => {
@@ -19,30 +18,20 @@ const DomainsPage: React.FC = () => {
     setDomains(domains.filter(domain => domain.domainId !== domainId));
   };
 
-  const handleEditDomain = (domain: Domain) => {
-    setEditingDomain(domain);
-    setIsEditing(true);
-  };
+  const handleAddDomain = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const handleUpdateDomain = async () => {
-    if (editingDomain) {
-      await updateADomain(editingDomain.domainId, editingDomain);  
-      setDomains(
-        domains.map((domain) =>
-          domain.domainId === editingDomain.domainId ? editingDomain : domain
-        )
-      );
-      setIsEditing(false); 
-      setEditingDomain(null); 
+    if (newDomain.name.trim() === "") {
+      alert("Le nom du domaine est requis.");
+      return;
     }
-  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (editingDomain) {
-      setEditingDomain({
-        ...editingDomain,
-        [e.target.name]: e.target.value,
-      });
+    const response = await addAdomain(newDomain); // Appel à la fonction addAdomain
+    if (response?.data) {
+      setDomains([...domains, response.data]); // Ajouter le nouveau domaine à la liste
+      setNewDomain({ name: "" }); // Réinitialiser le formulaire
+    } else {
+      alert("Erreur lors de l'ajout du domaine.");
     }
   };
 
@@ -50,46 +39,45 @@ const DomainsPage: React.FC = () => {
     <div>
       <h2>Listes des domaines</h2>
 
-      {isEditing && editingDomain ? (
-        <div>
-          <h3>Modifier le domaine</h3>
-          <input
-            type="text"
-            name="name"
-            value={editingDomain.name}
-            onChange={handleChange}
-          />
-          <button onClick={handleUpdateDomain}>Sauvegarder</button>
-          <button onClick={() => setIsEditing(false)}>Annuler</button>
-        </div>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Modifier</th>
-              <th>Supprimer</th>
+      {/* Formulaire pour ajouter un domaine */}
+      <form onSubmit={handleAddDomain}>
+        <label htmlFor="domainName">Nom du domaine :</label>
+        <input
+          type="text"
+          id="domainName"
+          value={newDomain.name}
+          onChange={(e) => setNewDomain({ ...newDomain, name: e.target.value })}
+          required
+        />
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {domains.map((domain) => (
+            <tr key={domain.domainId}>
+              <td>{domain.name}</td>
+              <td>
+                <button>
+                  <i className="fa-solid fa-pen"></i>
+                </button>
+              </td>
+              <td>
+                <button onClick={() => handleDeleteDomain(domain.domainId)}>
+                  <i className="fa-solid fa-trash"></i>
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {domains.map((domain) => (
-              <tr key={domain.domainId}>
-                <td>{domain.name}</td>
-                <td>
-                  <button onClick={() => handleEditDomain(domain)}>
-                    <i className="fa-solid fa-pen"></i>
-                  </button>
-                </td>
-                <td>
-                  <button onClick={() => handleDeleteDomain(domain.domainId)}>
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
