@@ -5,7 +5,10 @@ import { deleteADomain, fetchAllDomains, addAdomain } from "../services/api";
 
 const DomainsPage: React.FC = () => {
   const [domains, setDomains] = useState<Domain[]>([]);
-  const [newDomain, setNewDomain] = useState<Domain>({ name: "" }); // Etat pour le formulaire
+  const [newDomain, setNewDomain] = useState<Domain>({
+    domainId : 0,
+    name: "" ,
+    });
 
   useEffect(() => {
     fetchAllDomains().then((response: ApiResponse<Domain>) => {
@@ -28,8 +31,16 @@ const DomainsPage: React.FC = () => {
 
     const response = await addAdomain(newDomain); // Appel à la fonction addAdomain
     if (response?.data) {
-      setDomains([...domains, response.data]); // Ajouter le nouveau domaine à la liste
-      setNewDomain({ name: "" }); // Réinitialiser le formulaire
+     
+      /* 
+      * Si je laisse ceci souligné le code fonctionne parfaitement. 
+      * Si je le remplace par `setDomains([...domains, ...response.data]);`L'erreur disparait mais le code plante en console.
+      */
+
+      setDomains([...domains, response.data]); 
+      setNewDomain({ 
+        domainId : 0,
+        name: "" }); // Réinitialiser le formulaire
     } else {
       alert("Erreur lors de l'ajout du domaine.");
     }
