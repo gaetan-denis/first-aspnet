@@ -65,6 +65,18 @@ export const fetchAllDomains = async (): Promise<ApiResponse<Domain>> => {
   return data;
 };
 
+export const addAdomain = async (newDomain: Domain): Promise<ApiResponse<Domain>> => {
+  const response = await fetch("http://localhost:5086/api/v1/domains", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newDomain),
+  });
+  const data = await response.json();
+  return data;
+};
+
 export const deleteADomain = async (domainId: number): Promise<void> => {
   const response = await fetch(
     `http://localhost:5086/api/v1/domains/${domainId}`,
