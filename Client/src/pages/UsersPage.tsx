@@ -36,6 +36,7 @@ const UserPage: React.FC = () => {
             <td><input type="text" name="username"/></td>
             <td><input type="email" name="email" /></td>
             <td><input type="checkbox" name="isAdmin"/></td>
+            <td><input type="password" name="password" /></td>
             <td><button><i className="fa-solid fa-plus"></i></button></td>
             
             <td></td>
