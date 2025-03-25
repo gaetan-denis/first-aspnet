@@ -31,7 +31,7 @@ const DomainsPage: React.FC = () => {
       return;
     }
 
-    const response = await addAdomain(newDomain); // Appel à la fonction addAdomain
+    const response = await addAdomain(newDomain); 
     if (response?.data) {
 
       /* 
