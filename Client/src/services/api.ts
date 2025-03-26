@@ -24,15 +24,17 @@ export const addAUser = async (newUser: User): Promise<ApiResponse<User>> => {
   return data;
 };
 
-export const updateAUser = async (userId: number, updatedUser: { name: string, email: string }) => {
+export const updateAUser = async (userId: number, updatedUser: { username: string, email: string; password?: string; isAdmin: boolean  }) => {
   const response = await fetch(`http://localhost:5086/api/v1/users/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      name: updatedUser.name,
+      username: updatedUser.username,
       email: updatedUser.email,
+      password: updatedUser.password ?? "",
+      isAdmin: updatedUser.isAdmin, 
     }),
   });
 

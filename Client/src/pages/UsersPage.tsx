@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiResponse } from "../types/ApiResponse";
 import { User } from "../types/User";
-import { addAUser, deleteAUser, fetchAllUsers } from "../services/api";
+import { addAUser, deleteAUser, fetchAllUsers, updateAUser } from "../services/api";
 
 const UserPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -13,9 +13,11 @@ const UserPage: React.FC = () => {
     isAdmin: false,
   });
 
+  const [isEditing, setIsEditing] = useState<number | null>(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+
   useEffect(() => {
     fetchAllUsers().then((response: ApiResponse<User>) => {
-      console.log("Response from API:", response);
       setUsers(response.data.data);
     });
   }, []);
@@ -30,8 +32,9 @@ const UserPage: React.FC = () => {
     }
   };
 
-  const handleAddUser = async () => {
-    
+  const handleAddUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!newUser.username || !newUser.email || !newUser.password) {
       alert("Tous les champs doivent être remplis !");
       return;
@@ -39,9 +42,8 @@ const UserPage: React.FC = () => {
 
     const response = await addAUser(newUser);
 
-    if (response && response.data) {
-      //
-      setUsers((prevUsers) => [...prevUsers, ...response.data.data]);
+    if (response?.data) {
+      setUsers((prevUsers) => [...prevUsers, response.data]);
       setNewUser({
         userId: 0,
         username: "",
@@ -59,10 +61,43 @@ const UserPage: React.FC = () => {
     setUsers(users.filter((user) => user.userId !== userId));
   };
 
+  const handleEditUser = (user: User) => {
+    setIsEditing(user.userId);
+    setEditingUser({ ...user });
+  };
+
+  const handleEditInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (editingUser) {
+      const { name, value, type, checked } = e.target;
+      setEditingUser({
+        ...editingUser,
+        [name]: type === "checkbox" ? checked : value,
+      });
+    }
+  };
+
+  const handleUpdateUser = async () => {
+    if (editingUser) {
+      const updatedUserData = await updateAUser(editingUser.userId, editingUser);
+      console.log(updatedUserData);
+      if (updatedUserData) {
+        setUsers(
+          users.map((user) =>
+            user.userId === editingUser.userId ? editingUser : user
+          )
+        );
+        setIsEditing(null);
+        setEditingUser(null);
+      } else {
+        alert("Erreur lors de la mise à jour de l'utilisateur.");
+      }
+    }
+  };
+
   return (
     <div>
       <h2>Ajouter un utilisateur</h2>
-         <form onSubmit={handleAddUser}>
+      <form onSubmit={handleAddUser}>
         <table>
           <thead>
             <tr>
@@ -108,7 +143,6 @@ const UserPage: React.FC = () => {
                 />
               </td>
               <td>
-                {/* On utilise un bouton submit pour soumettre le formulaire */}
                 <button type="submit">
                   <i className="fa-solid fa-plus"></i>
                 </button>
@@ -117,6 +151,7 @@ const UserPage: React.FC = () => {
           </tbody>
         </table>
       </form>
+
       <h2>Liste des utilisateurs</h2>
       <table>
         <thead>
@@ -131,19 +166,59 @@ const UserPage: React.FC = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.userId}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>
-              <td>
-                <button>
-                  <i className="fa-solid fa-pen"></i>
-                </button>
-              </td>
-              <td>
-                <button onClick={() => handleDeleteUser(user.userId)}>
-                  <i className="fa-solid fa-trash"></i>
-                </button>
-              </td>
+              {isEditing === user.userId && editingUser ? (
+                <>
+                  <td>
+                    <input
+                      type="text"
+                      name="username"
+                      value={editingUser.username}
+                      onChange={handleEditInputChange}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="email"
+                      name="email"
+                      value={editingUser.email}
+                      onChange={handleEditInputChange}
+                    />
+                  </td>
+                  <td>••••••••</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="isAdmin"
+                      checked={editingUser.isAdmin}
+                      onChange={handleEditInputChange}
+                    />
+                  </td>
+                  <td>
+                    <button onClick={handleUpdateUser}>
+                      <i className="fa-solid fa-save"></i>
+                    </button>
+                    <button onClick={() => setIsEditing(null)}>
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.isAdmin ? "Admin" : "Utilisateur"}</td>
+                  <td>
+                    <button onClick={() => handleEditUser(user)}>
+                      <i className="fa-solid fa-pen"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleDeleteUser(user.userId)}>
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>
