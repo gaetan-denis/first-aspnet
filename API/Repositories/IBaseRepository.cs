@@ -1,7 +1,3 @@
-
-
-using Azure.Identity;
-
 namespace API.Repositories
 {
     public interface IBaseRepository<T> where T : class

@@ -1,9 +1,3 @@
-using API.Controllers;
-using API.Dtos.Domain;
-using API.Dtos.Responses;
-using API.Enums;
-using API.Repositories;
-
 namespace API.Services
 {
     public class DomainService : IDomainService

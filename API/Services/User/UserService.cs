@@ -1,11 +1,3 @@
-
-using API.Controllers;
-using API.Dtos.Responses;
-using API.Dtos.User;
-using API.Enums;
-using API.Repositories;
-using Azure;
-
 namespace API.Services
 {
     public class UserService : IUserService

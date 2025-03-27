@@ -1,9 +1,3 @@
-using API.Controllers;
-using API.Dtos.Post;
-using API.Dtos.Responses;
-using API.Enums;
-using API.Repositories;
-
 namespace API.Services
 {
     public class PostService : IPostService

@@ -1,8 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
 
-
-
 namespace API.Services
 {
     public class PasswordManager : IPasswordManager

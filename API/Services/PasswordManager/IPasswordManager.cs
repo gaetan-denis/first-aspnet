@@ -1,4 +1,3 @@
-
 namespace API.Services
 {
     public interface IPasswordManager
