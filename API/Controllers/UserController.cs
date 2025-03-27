@@ -1,8 +1,3 @@
-using API.Dtos.User;
-using API.Enums;
-using API.Validator;
-using Microsoft.AspNetCore.Mvc;
-
 namespace API.Controllers
 {
     [ApiController]

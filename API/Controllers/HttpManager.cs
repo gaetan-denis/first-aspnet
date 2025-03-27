@@ -1,7 +1,4 @@
 
-using API.Enums;
-using Microsoft.AspNetCore.Mvc;
-
 namespace API.Controllers
 {
     public static class HttpManager

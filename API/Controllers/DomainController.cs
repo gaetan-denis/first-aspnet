@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using API.Dtos.Domain;
-using API.Validator;
-using API.Enums;
-
 namespace API.Controllers
 {
     [Route("API/v1/domains")]

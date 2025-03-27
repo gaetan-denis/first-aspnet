@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using API.Dtos.Post;
-using API.Enums;
-using API.Validator;
-
 namespace API.Controllers
 {
     [Route("API/v1/posts")]
