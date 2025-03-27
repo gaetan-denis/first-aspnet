@@ -12,3 +12,5 @@ global using API.Dtos.Post;
 global using API.Dtos.User;
 global using API.Validator;
 global using API.Enums;
+global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
