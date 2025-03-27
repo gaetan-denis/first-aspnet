@@ -1,0 +1,6 @@
+# Ignorer les répertoires de build
+bin
+obj
+
+# Ignorer les fichiers et répertoires générés par l'IDE
+.vscode/
