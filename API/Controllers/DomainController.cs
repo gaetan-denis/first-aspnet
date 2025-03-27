@@ -13,14 +13,14 @@ namespace API.Controllers
         public async Task<IActionResult> AddAsync([FromBody] AddDomainDto newDomain)
         {
             if (
-                !PayloadValidator.ProtectAgainstSQLI(newDomain.Name))                 
+                !PayloadValidator.ProtectAgainstSQLI(newDomain.Name))
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
             if (
                 !PayloadValidator.ProtectAgainstXSS(newDomain.Name))
-                
+
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
                 return BadRequest(errorResponse);
@@ -47,14 +47,14 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateDomainDto updatedDomain)
         {
             if (
-                !PayloadValidator.ProtectAgainstSQLI(updatedDomain.Name))                 
+                !PayloadValidator.ProtectAgainstSQLI(updatedDomain.Name))
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
             if (
                 !PayloadValidator.ProtectAgainstXSS(updatedDomain.Name))
-                
+
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
                 return BadRequest(errorResponse);

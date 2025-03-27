@@ -154,7 +154,7 @@ namespace API.Services
 
             response.Data = new DomainDto
             {
-                DomainId= domain.Id,
+                DomainId = domain.Id,
                 Name = domain.Name,
             };
 

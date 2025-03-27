@@ -1,6 +1,5 @@
 namespace API.Enums
 {
-
     public enum EErrorType : int
     {
         UNAUTHORIZED = 1,

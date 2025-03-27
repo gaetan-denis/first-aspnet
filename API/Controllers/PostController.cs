@@ -14,7 +14,7 @@ namespace API.Controllers
         {
             if (
                 !PayloadValidator.ProtectAgainstSQLI(newPost.Title) ||
-                !PayloadValidator.ProtectAgainstSQLI(newPost.Content))                 
+                !PayloadValidator.ProtectAgainstSQLI(newPost.Content))
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
                 return BadRequest(errorResponse);
@@ -22,14 +22,14 @@ namespace API.Controllers
             if (
                 !PayloadValidator.ProtectAgainstXSS(newPost.Title) ||
                 !PayloadValidator.ProtectAgainstXSS(newPost.Content))
-                
+
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
 
             var response = await _postService.AddAsync(newPost);
-             return await HttpManager.HttpResponse(response);
+            return await HttpManager.HttpResponse(response);
         }
 
         [HttpGet]
@@ -49,9 +49,9 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdatePostDto updatedPost)
         {
-             if (
-                !PayloadValidator.ProtectAgainstSQLI(updatedPost.Title) ||
-                !PayloadValidator.ProtectAgainstSQLI(updatedPost.Content))                 
+            if (
+               !PayloadValidator.ProtectAgainstSQLI(updatedPost.Title) ||
+               !PayloadValidator.ProtectAgainstSQLI(updatedPost.Content))
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
                 return BadRequest(errorResponse);
@@ -59,20 +59,20 @@ namespace API.Controllers
             if (
                 !PayloadValidator.ProtectAgainstXSS(updatedPost.Title) ||
                 !PayloadValidator.ProtectAgainstXSS(updatedPost.Content))
-                
+
             {
                 var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
             var response = await _postService.UpdateAsync(id, updatedPost);
-             return await HttpManager.HttpResponse(response);
+            return await HttpManager.HttpResponse(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var response = await _postService.DeleteAsync(id);
-             return await HttpManager.HttpResponse(response);
+            return await HttpManager.HttpResponse(response);
         }
     }
 }

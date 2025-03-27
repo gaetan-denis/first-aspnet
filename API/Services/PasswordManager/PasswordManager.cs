@@ -4,7 +4,7 @@ using System.Text;
 namespace API.Services
 {
     public class PasswordManager : IPasswordManager
-    {   
+    {
         // Hash le mot de passe en clair de l'utiliszteur 
         public string HashPassword(string password, out string salt)
         {
@@ -42,5 +42,5 @@ namespace API.Services
             return Convert.ToBase64String(hashBytes);
         }
     }
-    
+
 }

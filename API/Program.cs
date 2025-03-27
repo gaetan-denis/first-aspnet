@@ -1,11 +1,3 @@
-
-
-
-
-using API.Repositories;
-using API.Services;
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Ajout de la politique CORS
@@ -14,7 +6,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")  
+        policy.WithOrigins("http://localhost:5173")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -44,12 +36,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 // Ajout du service de PostController chaque fois qu'une requête http sera effectuée
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<IPostService,PostService>();
+builder.Services.AddScoped<IPostService, PostService>();
 
 // Ajout du service de DomainController chaque fois qu'une requête http sera effectuée
 
 builder.Services.AddScoped<IDomainRepository, DomainRepository>();
-builder.Services.AddScoped<IDomainService,DomainService>();
+builder.Services.AddScoped<IDomainService, DomainService>();
 
 var app = builder.Build();
 
@@ -74,4 +66,4 @@ app.UseRouting();
 //Map
 app.MapControllers();
 
-app.Run(); 
+app.Run();

@@ -12,8 +12,8 @@ namespace API.Services
         //Permet d'ajouter un nouvel domaine dans le système.
         Task<ServiceResponse<DomainDto>> AddAsync(AddDomainDto newDomain);
         //Permet de modifier un domain dans le système.
-        Task <ServiceResponse<DomainDto>>UpdateAsync(int id, UpdateDomainDto updateddomain);
+        Task<ServiceResponse<DomainDto>> UpdateAsync(int id, UpdateDomainDto updateddomain);
         // Supprime un domain dans le système.
-        Task <ServiceResponse<DomainDto>>DeleteAsync(int id);
+        Task<ServiceResponse<DomainDto>> DeleteAsync(int id);
     }
-}  
+}

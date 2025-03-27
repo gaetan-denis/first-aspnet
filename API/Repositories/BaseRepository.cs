@@ -1,9 +1,8 @@
-
 namespace API.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-         protected readonly  DataContext _context;
+        protected readonly DataContext _context;
 
         public BaseRepository(DataContext context)
         {
@@ -12,12 +11,12 @@ namespace API.Repositories
 
         public async Task<T?> GetByIdAsync(int id)
         {
-            return await _context.Set<T>().FindAsync(id);  
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();  
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task<T> AddAsync(T entity)
@@ -37,12 +36,11 @@ namespace API.Repositories
         public async Task DeleteAsync(int id)
         {
             var entity = await GetByIdAsync(id);
-            if (entity!= null)
+            if (entity != null)
             {
                 _context.Set<T>().Remove(entity);
                 await _context.SaveChangesAsync();
             }
         }
-        
     }
 }

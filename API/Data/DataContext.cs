@@ -19,7 +19,7 @@ public class DataContext : DbContext
         modelBuilder.Entity<User>()
             //Possède une clé égale à Id
             .HasKey(u => u.Id);
-            
+
 
         //Défini la clé primaire de Post
         modelBuilder.Entity<Post>()

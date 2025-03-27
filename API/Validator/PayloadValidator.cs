@@ -124,9 +124,9 @@ namespace API.Validator
             return true;
         }
 
-        public static ServiceResponse<T> BuildError<T>(string message, EErrorType errorType = EErrorType.BAD) 
+        public static ServiceResponse<T> BuildError<T>(string message, EErrorType errorType = EErrorType.BAD)
         {
-             return new ServiceResponse<T>
+            return new ServiceResponse<T>
             {
                 Message = message,
                 ErrorType = errorType

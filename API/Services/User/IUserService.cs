@@ -8,14 +8,14 @@ namespace API.Services
     public interface IUserService
     {
         // Récupère un user spécifique en fonction de son id.
-        Task<ServiceResponse<UserDto>>GetByIdAsync(int id);
-        
-        Task<ServiceResponse<Pagination<UserDto>>>GetAllAsync(int page, int window);
+        Task<ServiceResponse<UserDto>> GetByIdAsync(int id);
+
+        Task<ServiceResponse<Pagination<UserDto>>> GetAllAsync(int page, int window);
         //Permet d'ajouter un nouvel user dans le système.
-        Task <ServiceResponse<UserDto>>AddAsync(AddUserDto newUser);
+        Task<ServiceResponse<UserDto>> AddAsync(AddUserDto newUser);
         //Permet de modifier un user dans le système.y
-        Task <ServiceResponse<UserDto>>UpdateAsync(int id, UpdateUserDto updatedUser);
+        Task<ServiceResponse<UserDto>> UpdateAsync(int id, UpdateUserDto updatedUser);
         // Supprime un user dans le système.
-        Task <ServiceResponse<UserDto>>DeleteAsync(int id);
+        Task<ServiceResponse<UserDto>> DeleteAsync(int id);
     }
 }

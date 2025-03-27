@@ -52,7 +52,7 @@ namespace API.Services
                 return HttpManager.CreateErrorResponse<Pagination<UserDto>>(EErrorType.NOTFOUND, "Utilisateurs non trouvés");
             }
 
-            
+
             int totalUsers = users.Count();
             var paginatedUsers = users
                 .Skip((page - 1) * window)
@@ -61,7 +61,7 @@ namespace API.Services
 
             var userDtos = paginatedUsers.Select(u => new UserDto
             {
-                UserId=u.Id,
+                UserId = u.Id,
                 Username = u.Username,
                 Email = u.Email,
                 IsAdmin = u.IsAdmin

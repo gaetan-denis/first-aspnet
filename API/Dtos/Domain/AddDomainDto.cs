@@ -3,6 +3,6 @@ namespace API.Dtos.Domain
     public class AddDomainDto
     {
         [Required]
-        public required string Name {get;set;}
+        public required string Name { get; set; }
     }
 }

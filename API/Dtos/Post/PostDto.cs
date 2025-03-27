@@ -3,8 +3,8 @@ namespace API.Dtos
     public class PostDto
     {
         [Required]
-        public required int PostId {get;set;}
-        
+        public required int PostId { get; set; }
+
         [StringLength(100, MinimumLength = 3)]
         public required string Title { get; set; }
 

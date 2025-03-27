@@ -49,23 +49,23 @@ namespace API.Services
         {
             var response = new ServiceResponse<Pagination<PostDto>>();
 
-            
+
             var posts = await _postRepository.GetAllAsync();
 
-            
+
             if (posts == null || !posts.Any())
             {
                 return HttpManager.CreateErrorResponse<Pagination<PostDto>>(EErrorType.NOTFOUND, "Aucun post trouvé");
             }
 
-            
-            int totalPosts = posts.Count();  
+
+            int totalPosts = posts.Count();
             var paginatedPosts = posts
-                .Skip((page - 1) * window)      
-                .Take(window)                  
+                .Skip((page - 1) * window)
+                .Take(window)
                 .ToList();
 
-            
+
             var postDtos = paginatedPosts.Select(p => new PostDto
             {
                 PostId = p.Id,
@@ -74,7 +74,7 @@ namespace API.Services
                 UserId = p.UserId
             }).ToList();
 
-            
+
             response.Data = new Pagination<PostDto>
             {
                 Data = postDtos,
@@ -82,7 +82,7 @@ namespace API.Services
                 Total = totalPosts
             };
 
-            
+
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
