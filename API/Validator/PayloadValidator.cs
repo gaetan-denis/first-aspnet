@@ -43,10 +43,10 @@ namespace API.Validator
 
             string[] dangerousPatterns = new string[]
             {
-            "<script", "</script>", "javascript:", "onload=", "onerror=", "alert(", "document.cookie",
-            "eval(", "window.location", "window.open", "<iframe", "</iframe>", "<object", "</object>",
-            "<embed", "</embed>", "<form", "</form>", "<input", "</input>", "<style", "</style>",
-            "<svg", "</svg>", "<img", "onmouseover=", "onfocus="
+                "<script", "</script>", "javascript:", "onload=", "onerror=", "alert(", "document.cookie",
+                "eval(", "window.location", "window.open", "<iframe", "</iframe>", "<object", "</object>",
+                "<embed", "</embed>", "<form", "</form>", "<input", "</input>", "<style", "</style>",
+                "<svg", "</svg>", "<img", "onmouseover=", "onfocus="
             };
 
             foreach (var pattern in dangerousPatterns)
