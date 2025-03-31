@@ -1,12 +1,16 @@
+using AutoMapper;
+
 namespace API.Services
 {
     public class DomainService : IDomainService
     {
         private readonly IDomainRepository _domainRepository;
+        private readonly IMapper _mapper;
 
-        public DomainService(IDomainRepository domainRepository)
+        public DomainService(IDomainRepository domainRepository, IMapper mapper)
         {
             _domainRepository = domainRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -24,12 +28,7 @@ namespace API.Services
                 return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOTFOUND, "domaine non trouvé");
             }
 
-            response.Data = new DomainDto
-            {
-                DomainId = domain.Id,
-                Name = domain.Name,
-
-            };
+            response.Data = _mapper.Map<DomainDto>(domain);
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
@@ -59,12 +58,7 @@ namespace API.Services
                 .ToList();
 
             // Mapper les domaines en DomainDto
-            var domainDtos = paginatedDomains.Select(d => new DomainDto
-            {
-                DomainId = d.Id,
-                Name = d.Name
-            }).ToList();
-
+            var domainDtos = _mapper.Map<List<DomainDto>>(paginatedDomains);
             // Créer la réponse avec la pagination
             response.Data = new Pagination<DomainDto>
             {
@@ -95,11 +89,8 @@ namespace API.Services
 
             var addedDomain = await _domainRepository.AddAsync(domain);
 
-            response.Data = new DomainDto
-            {
-                DomainId = domain.Id,
-                Name = addedDomain.Name,
-            };
+            response.Data = _mapper.Map<DomainDto>(addedDomain);
+
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -125,11 +116,8 @@ namespace API.Services
 
             var updated = await _domainRepository.UpdateAsync(existingDomain);
 
-            response.Data = new DomainDto
-            {
-                DomainId = updated.Id,
-                Name = updated.Name,
-            };
+            response.Data = _mapper.Map<DomainDto>(updated);
+
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -152,11 +140,7 @@ namespace API.Services
 
             await _domainRepository.DeleteAsync(id);
 
-            response.Data = new DomainDto
-            {
-                DomainId = domain.Id,
-                Name = domain.Name,
-            };
+            response.Data = _mapper.Map<DomainDto>(domain);
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
