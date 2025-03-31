@@ -1,3 +1,5 @@
+using AutoMapper;
+
 namespace API.Controllers
 {
     [ApiController]

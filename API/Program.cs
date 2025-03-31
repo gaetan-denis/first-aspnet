@@ -1,4 +1,11 @@
+
+using Api;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configuration d'automapper
+
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 // Ajout de la politique CORS
 

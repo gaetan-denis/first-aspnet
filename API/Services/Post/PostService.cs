@@ -1,16 +1,20 @@
+using AutoMapper;
+
 namespace API.Services
 {
     public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
+        private readonly IMapper _mapper;
 
         // Permet d'associer les utilisateurs
         private readonly IUserRepository _userRepository;
 
-        public PostService(IPostRepository postRepository, IUserRepository userRepository)
+        public PostService(IPostRepository postRepository, IUserRepository userRepository, IMapper mapper)
         {
             _postRepository = postRepository;
             _userRepository = userRepository;
+            _mapper = mapper;
 
         }
 
@@ -29,14 +33,7 @@ namespace API.Services
                 return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOTFOUND, "post non trouvé");
             }
 
-            response.Data = new PostDto
-            {
-                PostId = post.Id,
-                Title = post.Title,
-                Content = post.Content,
-                UserId = post.UserId
-
-            };
+            response.Data = _mapper.Map<PostDto>(post);
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
@@ -66,13 +63,7 @@ namespace API.Services
                 .ToList();
 
 
-            var postDtos = paginatedPosts.Select(p => new PostDto
-            {
-                PostId = p.Id,
-                Title = p.Title,
-                Content = p.Content,
-                UserId = p.UserId
-            }).ToList();
+           var postDtos = _mapper.Map<List<PostDto>>(paginatedPosts);
 
 
             response.Data = new Pagination<PostDto>
@@ -116,14 +107,8 @@ namespace API.Services
             };
 
             var addedPost = await _postRepository.AddAsync(post);
-
-            response.Data = new PostDto
-            {
-                PostId = post.Id,
-                Title = addedPost.Title,
-                Content = addedPost.Content,
-                UserId = addedPost.UserId
-            };
+            response.Data = _mapper.Map<PostDto>(addedPost);
+            
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -162,13 +147,7 @@ namespace API.Services
 
             var updated = await _postRepository.UpdateAsync(existingPost);
 
-            response.Data = new PostDto
-            {
-                PostId = updated.Id,
-                Title = updated.Title,
-                Content = updated.Content,
-                UserId = updated.UserId
-            };
+            response.Data = _mapper.Map<PostDto>(updated);
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -191,13 +170,7 @@ namespace API.Services
 
             await _postRepository.DeleteAsync(id);
 
-            response.Data = new PostDto
-            {
-                PostId = post.Id,
-                Title = post.Title,
-                Content = post.Content,
-                UserId = post.UserId,
-            };
+            response.Data = _mapper.Map<PostDto>(post);
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
