@@ -1,14 +1,19 @@
+using AutoMapper;
+
 namespace API.Services
 {
     public class UserService : IUserService
+
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordManager _passwordManager;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IPasswordManager passwordManager)
+        public UserService(IUserRepository userRepository, IPasswordManager passwordManager, IMapper mapper)
         {
             _userRepository = userRepository;
             _passwordManager = passwordManager;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -26,13 +31,7 @@ namespace API.Services
                 return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
             }
 
-            response.Data = new UserDto
-            {
-                UserId = user.Id,
-                Username = user.Username,
-                Email = user.Email,
-                IsAdmin = user.IsAdmin
-            };
+            response.Data = _mapper.Map<UserDto>(user);
             return HttpManager.CreateSuccessResponse(response.Data);
         }
 
@@ -59,13 +58,7 @@ namespace API.Services
                 .Take(window)
                 .ToList();
 
-            var userDtos = paginatedUsers.Select(u => new UserDto
-            {
-                UserId = u.Id,
-                Username = u.Username,
-                Email = u.Email,
-                IsAdmin = u.IsAdmin
-            }).ToList();
+            var userDtos = _mapper.Map<List<UserDto>>(paginatedUsers);
 
             response.Data = new Pagination<UserDto>
             {
@@ -105,13 +98,7 @@ namespace API.Services
 
             var addedUser = await _userRepository.AddAsync(user);
 
-            response.Data = new UserDto
-            {
-                UserId = user.Id,
-                Username = addedUser.Username,
-                Email = addedUser.Email,
-                IsAdmin = addedUser.IsAdmin
-            };
+            response.Data = _mapper.Map<UserDto>(addedUser);
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -144,14 +131,7 @@ namespace API.Services
             var updated = await _userRepository.UpdateAsync(existingUser);
 
 
-            response.Data = new UserDto
-            {
-                UserId = updated.Id,
-                Username = updated.Username,
-                Email = updated.Email,
-                IsAdmin = updated.IsAdmin
-            };
-
+            response.Data = _mapper.Map<UserDto>(updated);
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
@@ -173,13 +153,7 @@ namespace API.Services
             }
 
             await _userRepository.DeleteAsync(id);
-            response.Data = new UserDto
-            {
-                UserId = user.Id,
-                Username = user.Username,
-                Email = user.Email,
-                IsAdmin = user.IsAdmin
-            };
+            response.Data = _mapper.Map<UserDto>(user);
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }

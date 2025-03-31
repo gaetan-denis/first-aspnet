@@ -3,7 +3,7 @@ using AutoMapper;
 
 namespace Api;
 
-public class MappingProfile : AutoMapper.Profile
+public class MappingProfile : Profile
 {
     public MappingProfile()
     {
