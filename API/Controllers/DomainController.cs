@@ -12,17 +12,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] AddDomainDto newDomain)
         {
-            if (
-                !PayloadValidator.ProtectAgainstSQLI(newDomain.Name))
+           if (!PayloadValidator.ValidateObject(newDomain, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
-                return BadRequest(errorResponse);
-            }
-            if (
-                !PayloadValidator.ProtectAgainstXSS(newDomain.Name))
-
-            {
-                var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
             var response = await _domainService.AddAsync(newDomain);
@@ -46,17 +38,9 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateDomainDto updatedDomain)
         {
-            if (
-                !PayloadValidator.ProtectAgainstSQLI(updatedDomain.Name))
+           if (!PayloadValidator.ValidateObject(updatedDomain, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
-                return BadRequest(errorResponse);
-            }
-            if (
-                !PayloadValidator.ProtectAgainstXSS(updatedDomain.Name))
-
-            {
-                var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
             var response = await _domainService.UpdateAsync(id, updatedDomain);

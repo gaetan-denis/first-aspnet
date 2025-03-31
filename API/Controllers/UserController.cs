@@ -13,20 +13,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] AddUserDto newUser)
         {
-            if (
-                !PayloadValidator.ProtectAgainstSQLI(newUser.Email) ||
-                !PayloadValidator.ProtectAgainstSQLI(newUser.Username) ||
-                !PayloadValidator.ProtectAgainstSQLI(newUser.Password))
+            if (!PayloadValidator.ValidateObject(newUser, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
-                return BadRequest(errorResponse);
-            }
-            if (
-                !PayloadValidator.ProtectAgainstXSS(newUser.Email) ||
-                !PayloadValidator.ProtectAgainstXSS(newUser.Username) ||
-                !PayloadValidator.ProtectAgainstXSS(newUser.Password))
-            {
-                var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
 
@@ -58,22 +47,9 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateUserDto updatedUser)
         {
 
-            if (
-                !PayloadValidator.ProtectAgainstSQLI(updatedUser.Email) ||
-                !PayloadValidator.ProtectAgainstSQLI(updatedUser.Username) ||
-                !PayloadValidator.ProtectAgainstSQLI(updatedUser.Password))
+           if (!PayloadValidator.ValidateObject(updatedUser, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Tentative de soumettre des données invalides. Les entrées ne sont pas autorisées.", EErrorType.BAD);
-                return BadRequest(errorResponse);
-            }
-
-            // Protection contre les XSS
-            if (
-                !PayloadValidator.ProtectAgainstXSS(updatedUser.Email) ||
-                !PayloadValidator.ProtectAgainstXSS(updatedUser.Username) ||
-                !PayloadValidator.ProtectAgainstXSS(updatedUser.Password))
-            {
-                var errorResponse = PayloadValidator.BuildError<string>("Caractères dangereux détectés dans l'entrée.", EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
                 return BadRequest(errorResponse);
             }
 
@@ -84,7 +60,6 @@ namespace API.Controllers
                 return BadRequest(errorResponse);
             }
 
-            // Appel au service pour mettre à jour l'utilisateur
             var response = await _userService.UpdateAsync(id, updatedUser);
             return Ok(response);
         }

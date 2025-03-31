@@ -2,6 +2,40 @@ namespace API.Validator
 {
     public class PayloadValidator
     {
+
+        public static bool ValidateObject<T>(T obj, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+
+            if (obj == null)
+            {
+                errorMessage = "L'objet fourni est null.";
+                return false;
+            }
+
+            var properties = obj.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(obj);
+
+                if (value is string strValue)
+                {
+                    if (!ProtectAgainstSQLI(strValue) || !ProtectAgainstXSS(strValue))
+                    {
+                        errorMessage = $"Valeur invalide détectée dans {prop.Name}.";
+                        return false;
+                    }
+
+                    
+                    if (prop.Name.ToLower().Contains("email") && !BlockTemporaryEmails(strValue))
+                    {
+                        errorMessage = "Les emails jetables ne sont pas autorisés.";
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         /// <summary>
         /// Prend une chaïne de caractèreet vérifie qu'elle ne contient pas de termes suscptibles de représenter une menace d'injection SQL.
         /// </summary>
