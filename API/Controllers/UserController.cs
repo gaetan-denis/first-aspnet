@@ -15,21 +15,25 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] AddUserDto newUser)
         {
+            
             if (!PayloadValidator.ValidateObject(newUser, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
-                return BadRequest(errorResponse);
+                var errorResponse = HttpManager.CreateErrorResponse<string>(EErrorType.BAD_REQUEST, errorMessage);  
+                return BadRequest(errorResponse);  
             }
 
-
+            
             if (!PayloadValidator.BlockTemporaryEmails(newUser.Email))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Les emails jetables ne sont pas autorisés", EErrorType.BAD);
+                var errorResponse = HttpManager.CreateErrorResponse<string>(EErrorType.BAD_REQUEST, "Les emails jetables ne sont pas autorisés");
                 return BadRequest(errorResponse);
             }
 
+            
             var response = await _userService.AddAsync(newUser);
-            return Ok(response);
+
+            
+            return await HttpManager.HttpResponse(response);  
         }
 
         [HttpGet]
@@ -49,21 +53,21 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateUserDto updatedUser)
         {
 
-           if (!PayloadValidator.ValidateObject(updatedUser, out string errorMessage))
+            if (!PayloadValidator.ValidateObject(updatedUser, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
 
             // Validation des emails jetables
             if (!PayloadValidator.BlockTemporaryEmails(updatedUser.Email))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Les emails jetables ne sont pas autorisés", EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>("Les emails jetables ne sont pas autorisés", EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
 
             var response = await _userService.UpdateAsync(id, updatedUser);
-            return Ok(response);
+            return await HttpManager.HttpResponse(response);
         }
 
         [HttpDelete("{id}")]

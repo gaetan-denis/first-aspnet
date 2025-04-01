@@ -14,7 +14,7 @@ namespace API.Controllers
         {
           if (!PayloadValidator.ValidateObject(newPost, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
 
@@ -41,7 +41,7 @@ namespace API.Controllers
         {
             if (!PayloadValidator.ValidateObject(updatedPost, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
             var response = await _postService.UpdateAsync(id, updatedPost);

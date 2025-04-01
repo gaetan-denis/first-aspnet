@@ -28,7 +28,7 @@ namespace API.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
+                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOT_FOUND, "utilisateur non trouvé");
             }
 
             response.Data = _mapper.Map<UserDto>(user);
@@ -48,7 +48,7 @@ namespace API.Services
 
             if (users == null || !users.Any())
             {
-                return HttpManager.CreateErrorResponse<Pagination<UserDto>>(EErrorType.NOTFOUND, "Utilisateurs non trouvés");
+                return HttpManager.CreateErrorResponse<Pagination<UserDto>>(EErrorType.NOT_FOUND, "Utilisateurs non trouvés");
             }
 
 
@@ -119,7 +119,7 @@ namespace API.Services
             if (existingUser == null)
             {
 
-                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
+                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOT_FOUND, "utilisateur non trouvé");
             }
 
 
@@ -149,7 +149,7 @@ namespace API.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
-                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
+                return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOT_FOUND, "utilisateur non trouvé");
             }
 
             await _userRepository.DeleteAsync(id);

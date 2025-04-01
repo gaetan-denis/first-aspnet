@@ -25,7 +25,7 @@ namespace API.Services
             var domain = await _domainRepository.GetByIdAsync(id);
             if (domain == null)
             {
-                return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOTFOUND, "domaine non trouvé");
+                return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOT_FOUND, "domaine non trouvé");
             }
 
             response.Data = _mapper.Map<DomainDto>(domain);
@@ -47,7 +47,7 @@ namespace API.Services
             // Si aucun domaine n'est trouvé
             if (domains == null || !domains.Any())
             {
-                return HttpManager.CreateErrorResponse<Pagination<DomainDto>>(EErrorType.NOTFOUND, "Aucun domaine trouvé");
+                return HttpManager.CreateErrorResponse<Pagination<DomainDto>>(EErrorType.NOT_FOUND, "Aucun domaine trouvé");
             }
 
             // Pagination
@@ -109,7 +109,7 @@ namespace API.Services
             var existingDomain = await _domainRepository.GetByIdAsync(id);
             if (existingDomain == null)
             {
-                return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOTFOUND, "domaine non trouvé");
+                return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOT_FOUND, "domaine non trouvé");
             }
 
             existingDomain.Name = updatedDomain.Name;
@@ -135,7 +135,7 @@ namespace API.Services
             var domain = await _domainRepository.GetByIdAsync(id);
             if (domain == null)
             {
-                return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOTFOUND, "domaine non trouvé");
+                return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOT_FOUND, "domaine non trouvé");
             }
 
             await _domainRepository.DeleteAsync(id);

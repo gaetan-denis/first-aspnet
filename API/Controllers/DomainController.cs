@@ -14,7 +14,7 @@ namespace API.Controllers
         {
            if (!PayloadValidator.ValidateObject(newDomain, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
             var response = await _domainService.AddAsync(newDomain);
@@ -40,7 +40,7 @@ namespace API.Controllers
         {
            if (!PayloadValidator.ValidateObject(updatedDomain, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD);
+                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
             var response = await _domainService.UpdateAsync(id, updatedDomain);

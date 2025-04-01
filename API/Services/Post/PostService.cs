@@ -30,7 +30,7 @@ namespace API.Services
             var post = await _postRepository.GetByIdAsync(id);
             if (post == null)
             {
-                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOTFOUND, "post non trouvé");
+                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOT_FOUND, "post non trouvé");
             }
 
             response.Data = _mapper.Map<PostDto>(post);
@@ -52,7 +52,7 @@ namespace API.Services
 
             if (posts == null || !posts.Any())
             {
-                return HttpManager.CreateErrorResponse<Pagination<PostDto>>(EErrorType.NOTFOUND, "Aucun post trouvé");
+                return HttpManager.CreateErrorResponse<Pagination<PostDto>>(EErrorType.NOT_FOUND, "Aucun post trouvé");
             }
 
 
@@ -91,7 +91,7 @@ namespace API.Services
             var user = await _userRepository.GetByIdAsync(newPost.UserId);
             if (user == null)
             {
-                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOTFOUND, "utilisateur non trouvé");
+                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOT_FOUND, "utilisateur non trouvé");
             }
 
 
@@ -128,7 +128,7 @@ namespace API.Services
 
             if (existingPost == null)
             {
-                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOTFOUND, "Post non trouvé");
+                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOT_FOUND, "Post non trouvé");
             }
 
 
@@ -136,7 +136,7 @@ namespace API.Services
             var user = await _userRepository.GetByIdAsync(updatedPost.UserId);
             if (user == null)
             {
-                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOTFOUND, "Utilisateur non trouvé");
+                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOT_FOUND, "Utilisateur non trouvé");
             }
 
             existingPost.Title = updatedPost.Title;
@@ -165,7 +165,7 @@ namespace API.Services
             var post = await _postRepository.GetByIdAsync(id);
             if (post == null)
             {
-                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOTFOUND, "post non trouvé");
+                return HttpManager.CreateErrorResponse<PostDto>(EErrorType.NOT_FOUND, "post non trouvé");
             }
 
             await _postRepository.DeleteAsync(id);
