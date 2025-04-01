@@ -121,12 +121,8 @@ namespace API.Services
 
                 return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOT_FOUND, "utilisateur non trouvé");
             }
-
-
             existingUser.Username = updatedUser.Username;
             existingUser.Email = updatedUser.Email;
-
-
 
             var updated = await _userRepository.UpdateAsync(existingUser);
 
@@ -157,7 +153,5 @@ namespace API.Services
 
             return HttpManager.CreateSuccessResponse(response.Data);
         }
-
-
     }
 }

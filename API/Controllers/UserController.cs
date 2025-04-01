@@ -74,7 +74,7 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var response = await _userService.DeleteAsync(id);
-            return await HttpManager.HttpResponse(response);
+            return await HttpManager.CreateDeleteResponse(response);
         }
     }
 }
