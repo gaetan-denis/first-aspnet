@@ -47,7 +47,7 @@ namespace API.Controllers
         /// <param name="response"></param>
         /// <returns>Si Success est true, elle retroune un NoContentResult, Si false elle génère une erreur via HrrpResponse</returns>
 
-        public static Task<IActionResult> CreateDeleteResponse(ServiceResponse<object> response)
+        public static Task<IActionResult> CreateDeleteResponse<T>(ServiceResponse<T> response) where T : class
         {
             Console.WriteLine($"Delete Response - Success: {response.Success}, ErrorType: {response.ErrorType}");
             return response.Success ? Task.FromResult<IActionResult>(new NoContentResult()) : HttpResponse(response);  
