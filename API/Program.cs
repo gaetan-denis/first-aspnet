@@ -1,5 +1,6 @@
 
 using Api;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,21 @@ builder.Services.AddCors(options =>
               .AllowCredentials();
     });
 });
+
+
+// Vérifie et crée le dossier Logs si nécessaire
+Directory.CreateDirectory("Logs");
+
+// Configuration de Serilog
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/app.log", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
+    .CreateLogger();
+
+// Remplace le système de logging par défaut par Serilog
+builder.Host.UseSerilog();
+builder.Logging.ClearProviders(); // Supprime les autres providers de logs
+builder.Logging.AddSerilog(); // Ajoute Serilog comme provider unique
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -74,5 +90,5 @@ app.UseRouting();
 
 //Map
 app.MapControllers();
-
+Log.Information("L'application démarre...");
 app.Run();

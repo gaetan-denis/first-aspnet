@@ -4,3 +4,7 @@ obj
 
 # Ignorer les fichiers et répertoires générés par l'IDE
 .vscode/
+
+# Ignorer le fichier de log.
+
+Logs/
