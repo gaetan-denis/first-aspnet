@@ -78,14 +78,23 @@ namespace API.Services
 
         public async Task<ServiceResponse<UserDto>> AddAsync(AddUserDto newUser)
         {
-            var response = new ServiceResponse<UserDto>();
 
-            // Hachage du mot de passer avec génération du sel
+            ServiceResponse<UserDto> response = new ServiceResponse<UserDto>();
 
-            string salt;
-            var hashedPassword = _passwordManager.HashPassword(newUser.Password, out salt);
+            User existingUser = await _userRepository.GetByUsernameOrEmailAsync(newUser.Username, newUser.Email);
+            if (existingUser != null)
+            {
+                response.Success = false;
+                response.Message = "Un utilisateur avec ce nom d'utilisateur ou cet e-mail existe déjà.";
+                return response;
+            }
 
-            var user = new User
+            // Hachage du mot de passe avec génération du sel
+
+            string salt = string.Empty;
+            string hashedPassword = _passwordManager.HashPassword(newUser.Password, out salt);
+
+            User user = new User
             {
                 Username = newUser.Username,
                 Email = newUser.Email,
@@ -96,11 +105,11 @@ namespace API.Services
                 UpdatedAt = DateTime.UtcNow
             };
 
-            var addedUser = await _userRepository.AddAsync(user);
+            User addedUser = await _userRepository.AddAsync(user);
 
             response.Data = _mapper.Map<UserDto>(addedUser);
 
-            return HttpManager.CreateSuccessResponse(response.Data);
+            return response;
         }
 
         /// <summary>
@@ -112,10 +121,10 @@ namespace API.Services
 
         public async Task<ServiceResponse<UserDto>> UpdateAsync(int id, UpdateUserDto updatedUser)
         {
-            var response = new ServiceResponse<UserDto>();
+            ServiceResponse<UserDto> response = new ServiceResponse<UserDto>();
 
 
-            var existingUser = await _userRepository.GetByIdAsync(id);
+            User? existingUser = await _userRepository.GetByIdAsync(id);
             if (existingUser == null)
             {
 
@@ -124,7 +133,7 @@ namespace API.Services
             existingUser.Username = updatedUser.Username;
             existingUser.Email = updatedUser.Email;
 
-            var updated = await _userRepository.UpdateAsync(existingUser);
+            User updated = await _userRepository.UpdateAsync(existingUser);
 
 
             response.Data = _mapper.Map<UserDto>(updated);
@@ -140,7 +149,7 @@ namespace API.Services
 
         public async Task<ServiceResponse<UserDto>> DeleteAsync(int id)
         {
-            var response = new ServiceResponse<UserDto>();
+            ServiceResponse<UserDto> response = new ServiceResponse<UserDto>();
 
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)

@@ -12,5 +12,7 @@ namespace API.Repositories
         Task<User> UpdateAsync(User user);
         //delete un user
         Task DeleteAsync(int id);
+
+        Task<User?> GetByUsernameOrEmailAsync(string username, string email);
     }
-}
+}                        
