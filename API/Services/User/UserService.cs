@@ -42,9 +42,9 @@ namespace API.Services
 
         public async Task<ServiceResponse<Pagination<UserDto>>> GetAllAsync(int page, int window)
         {
-            var response = new ServiceResponse<Pagination<UserDto>>();
+            ServiceResponse<Pagination<UserDto>> response = new ServiceResponse<Pagination<UserDto>>();
 
-            var users = await _userRepository.GetAllAsync();
+            IEnumerable<User> users = await _userRepository.GetAllAsync();
 
             if (users == null || !users.Any())
             {
@@ -58,7 +58,7 @@ namespace API.Services
                 .Take(window)
                 .ToList();
 
-            var userDtos = _mapper.Map<List<UserDto>>(paginatedUsers);
+            List<UserDto> userDtos = _mapper.Map<List<UserDto>>(paginatedUsers);
 
             response.Data = new Pagination<UserDto>
             {
@@ -81,7 +81,7 @@ namespace API.Services
 
             ServiceResponse<UserDto> response = new ServiceResponse<UserDto>();
 
-            User existingUser = await _userRepository.GetByUsernameOrEmailAsync(newUser.Username, newUser.Email);
+            User? existingUser = await _userRepository.GetByUsernameOrEmailAsync(newUser.Username, newUser.Email);
             if (existingUser != null)
             {
                 response.Success = false;
@@ -151,7 +151,7 @@ namespace API.Services
         {
             ServiceResponse<UserDto> response = new ServiceResponse<UserDto>();
 
-            var user = await _userRepository.GetByIdAsync(id);
+            User? user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
                 return HttpManager.CreateErrorResponse<UserDto>(EErrorType.NOT_FOUND, "utilisateur non trouvé");

@@ -1,5 +1,3 @@
-using AutoMapper;
-
 namespace API.Controllers
 {
     [ApiController]
@@ -15,25 +13,28 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] AddUserDto newUser)
         {
-            
+
             if (!PayloadValidator.ValidateObject(newUser, out string errorMessage))
             {
-                var errorResponse = HttpManager.CreateErrorResponse<string>(EErrorType.BAD_REQUEST, errorMessage);  
-                return BadRequest(errorResponse);  
-            }
-
-            
-            if (!PayloadValidator.BlockTemporaryEmails(newUser.Email))
-            {
-                var errorResponse = HttpManager.CreateErrorResponse<string>(EErrorType.BAD_REQUEST, "Les emails jetables ne sont pas autorisés");
+                ServiceResponse<string> errorResponse = HttpManager.CreateErrorResponse<string>(EErrorType.BAD_REQUEST, errorMessage);
                 return BadRequest(errorResponse);
             }
 
-            
-            var response = await _userService.AddAsync(newUser);
 
-            
-            return await HttpManager.HttpResponse(response);  
+            if (!PayloadValidator.BlockTemporaryEmails(newUser.Email))
+            {
+                ServiceResponse<string> errorResponse = HttpManager.CreateErrorResponse<string>(EErrorType.BAD_REQUEST, "Les emails jetables ne sont pas autorisés");
+                return BadRequest(errorResponse);
+            }
+
+
+            ServiceResponse<UserDto> response = await _userService.AddAsync(newUser);
+
+
+
+            // Assurez-vous que la réponse est bien de type CREATED
+        
+            return await HttpManager.HttpResponse(response);
         }
 
         [HttpGet]
@@ -45,7 +46,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var response = await _userService.GetByIdAsync(id);
+            ServiceResponse<UserDto> response = await _userService.GetByIdAsync(id);
             return await HttpManager.HttpResponse(response);
         }
 
@@ -55,25 +56,25 @@ namespace API.Controllers
 
             if (!PayloadValidator.ValidateObject(updatedUser, out string errorMessage))
             {
-                var errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
+                ServiceResponse<string> errorResponse = PayloadValidator.BuildError<string>(errorMessage, EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
 
             // Validation des emails jetables
             if (!PayloadValidator.BlockTemporaryEmails(updatedUser.Email))
             {
-                var errorResponse = PayloadValidator.BuildError<string>("Les emails jetables ne sont pas autorisés", EErrorType.BAD_REQUEST);
+                ServiceResponse<string> errorResponse = PayloadValidator.BuildError<string>("Les emails jetables ne sont pas autorisés", EErrorType.BAD_REQUEST);
                 return BadRequest(errorResponse);
             }
 
-            var response = await _userService.UpdateAsync(id, updatedUser);
+            ServiceResponse<UserDto> response = await _userService.UpdateAsync(id, updatedUser);
             return await HttpManager.HttpResponse(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var response = await _userService.DeleteAsync(id);
+            ServiceResponse<UserDto> response = await _userService.DeleteAsync(id);
             return await HttpManager.CreateDeleteResponse(response);
         }
     }

@@ -1,20 +1,22 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using System.Linq;
-using System.Reflection;
-
 namespace API.Controllers
 {
     public static class HttpManager
     {
+
+        public static IHttpContextAccessor _httpContextAccessor;
+
+        public static void Configure(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         /// <summary>
         /// Cette méthode récupère le nom du contrôleur à partir des données de la route HTTP.
         /// </summary>
         /// <returns>Le nom du controleur ou "UnknownController</returns>
         private static string GetControllerName()
         {
-            var routeData = new HttpContextAccessor().HttpContext?.GetRouteData();
+            var routeData = _httpContextAccessor?.HttpContext?.GetRouteData();
             return routeData?.Values["controller"]?.ToString() ?? "UnknownController";
         }
 
@@ -50,7 +52,7 @@ namespace API.Controllers
         public static Task<IActionResult> CreateDeleteResponse<T>(ServiceResponse<T> response) where T : class
         {
             Console.WriteLine($"Delete Response - Success: {response.Success}, ErrorType: {response.ErrorType}");
-            return response.Success ? Task.FromResult<IActionResult>(new NoContentResult()) : HttpResponse(response);  
+            return response.Success ? Task.FromResult<IActionResult>(new NoContentResult()) : HttpResponse(response);
         }
 
         public static ServiceResponse<T> CreateErrorResponse<T>(EErrorType errorType, string message)
@@ -63,7 +65,6 @@ namespace API.Controllers
             };
         }
 
-
         public static ServiceResponse<T> CreateSuccessResponse<T>(T data)
         {
             return new ServiceResponse<T>
@@ -73,6 +74,23 @@ namespace API.Controllers
             };
         }
 
+        public static Task<IActionResult> HttpResponseCreated<T>(ServiceResponse<T> response, string actionName, object routeValues) where T : class
+        {
+            if (response.Success)
+            {
+                var id = response.Data?.GetType().GetProperty("UserId")?.GetValue(response.Data); // Récupère l'ID de manière dynamique
+                Console.WriteLine($"Created: {id}"); // Pour vérifier que l'ID est bien récupéré
+                return Task.FromResult<IActionResult>(new CreatedAtActionResult(
+                    actionName,
+                    GetControllerName(),
+                    new { id }, // Utilisation dynamique de l'ID
+                    response
+                ));
+            }
+
+            return HttpResponse(response);
+        }
+
 
         public static Task<IActionResult> HttpResponse<T>(ServiceResponse<T> response) where T : class
         {
@@ -80,7 +98,6 @@ namespace API.Controllers
             {
                 EErrorType.NOT_FOUND => Task.FromResult<IActionResult>(new NotFoundObjectResult(response)),
                 EErrorType.SUCCESS => Task.FromResult<IActionResult>(new OkObjectResult(response)),
-                EErrorType.CREATED => Task.FromResult<IActionResult>(new CreatedAtActionResult("GetByIdAsync", GetControllerName(), new { id = GetEntityId(response.Data) }, response)),
                 EErrorType.NOT_CONTENT => Task.FromResult<IActionResult>(new NoContentResult()),
                 EErrorType.UNAUTHORIZED => Task.FromResult<IActionResult>(new UnauthorizedObjectResult(response)),
                 EErrorType.BAD_REQUEST => Task.FromResult<IActionResult>(new BadRequestObjectResult(response)),

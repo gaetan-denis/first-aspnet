@@ -35,9 +35,9 @@ namespace API.Services
             // Crée un objet SHA256
             using var sha256 = SHA256.Create();
             // Combine le mot de passe et le sel, puis les convertit en tableau d'octets
-            var saltedPassword = Encoding.UTF8.GetBytes(password + salt);
+            byte[] saltedPassword = Encoding.UTF8.GetBytes(password + salt);
             // applique le hachage SHA256
-            var hashBytes = sha256.ComputeHash(saltedPassword);
+            byte[] hashBytes = sha256.ComputeHash(saltedPassword);
             // Returne le résultat transformer en Base64
             return Convert.ToBase64String(hashBytes);
         }

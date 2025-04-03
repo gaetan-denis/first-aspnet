@@ -21,8 +21,8 @@ namespace API.Services
 
         public async Task<ServiceResponse<DomainDto>> GetByIdAsync(int id)
         {
-            var response = new ServiceResponse<DomainDto>();
-            var domain = await _domainRepository.GetByIdAsync(id);
+            ServiceResponse<DomainDto> response = new ServiceResponse<DomainDto>();
+            Domain? domain = await _domainRepository.GetByIdAsync(id);
             if (domain == null)
             {
                 return HttpManager.CreateErrorResponse<DomainDto>(EErrorType.NOT_FOUND, "domaine non trouvé");
@@ -39,10 +39,10 @@ namespace API.Services
 
         public async Task<ServiceResponse<Pagination<DomainDto>>> GetAllAsync(int page, int window)
         {
-            var response = new ServiceResponse<Pagination<DomainDto>>();
+            ServiceResponse<Pagination<DomainDto> >response = new ServiceResponse<Pagination<DomainDto>>();
 
             // Récupérer tous les domaines
-            var domains = await _domainRepository.GetAllAsync();
+             IEnumerable<Domain>? domains = await _domainRepository.GetAllAsync();
 
             // Si aucun domaine n'est trouvé
             if (domains == null || !domains.Any())
@@ -58,7 +58,7 @@ namespace API.Services
                 .ToList();
 
             // Mapper les domaines en DomainDto
-            var domainDtos = _mapper.Map<List<DomainDto>>(paginatedDomains);
+            List<DomainDto> domainDtos = _mapper.Map<List<DomainDto>>(paginatedDomains);
             // Créer la réponse avec la pagination
             response.Data = new Pagination<DomainDto>
             {
@@ -80,9 +80,9 @@ namespace API.Services
 
         public async Task<ServiceResponse<DomainDto>> AddAsync(AddDomainDto newDomain)
         {
-            var response = new ServiceResponse<DomainDto>();
+            ServiceResponse<DomainDto> response = new ServiceResponse<DomainDto>();
 
-            var domain = new Domain
+            Domain domain = new Domain
             {
                 Name = newDomain.Name,
             };
@@ -104,7 +104,7 @@ namespace API.Services
 
         public async Task<ServiceResponse<DomainDto>> UpdateAsync(int id, UpdateDomainDto updatedDomain)
         {
-            var response = new ServiceResponse<DomainDto>();
+            ServiceResponse<DomainDto> response = new ServiceResponse<DomainDto>();
 
             var existingDomain = await _domainRepository.GetByIdAsync(id);
             if (existingDomain == null)
@@ -114,7 +114,7 @@ namespace API.Services
 
             existingDomain.Name = updatedDomain.Name;
 
-            var updated = await _domainRepository.UpdateAsync(existingDomain);
+            Domain updated = await _domainRepository.UpdateAsync(existingDomain);
 
             response.Data = _mapper.Map<DomainDto>(updated);
 
@@ -130,7 +130,7 @@ namespace API.Services
 
         public async Task<ServiceResponse<DomainDto>> DeleteAsync(int id)
         {
-            var response = new ServiceResponse<DomainDto>();
+            ServiceResponse<DomainDto> response = new ServiceResponse<DomainDto>();
 
             var domain = await _domainRepository.GetByIdAsync(id);
             if (domain == null)
