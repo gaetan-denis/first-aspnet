@@ -1,0 +1,14 @@
+ul{
+    display:flex;
+    li{
+        list-style-type: none;
+        a{
+            margin : 16px;
+            text-decoration: none;
+            color : black;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}
